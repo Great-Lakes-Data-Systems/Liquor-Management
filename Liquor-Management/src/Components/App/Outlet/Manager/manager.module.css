@@ -1,0 +1,15 @@
+.page {
+    /* All pages get this style. */
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.center {
+    /* Center the text */
+    display: flex;
+    justify-content: center;
+}
+
+.managerTitle {
+    margin: 0;
+}

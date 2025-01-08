@@ -1,0 +1,47 @@
+.popover {
+  position: relative;
+}
+
+
+
+
+
+
+.popover_modal {
+  --background-opacity: 0.0;
+  position: fixed;
+  z-index: 9999999999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  background: rgba(0, 0, 0, var(--background-opacity));
+  /* background-color: aquamarine; */
+  cursor: pointer;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  z-index: 1;
+  /* opacity: var(--background-opacity); */
+  /* transform: scale(0); */
+  transition: transform .3s ease-in-out;
+}
+.popover_modal.showing {
+  display: block;
+  /* transform: scale(1); */
+}
+
+
+.modal_popover {
+  position: absolute;    
+  left: 0;  
+  /* min-height: 150px;   */
+  /* padding: .65rem; */
+  overflow: hidden;
+  border-radius: 10px;
+  
+  /* background: linear-gradient(169deg, rgba(59, 15, 70, 0.41) 0%, rgba(81, 37, 92, 0.515) 39%, rgba(55, 58, 68, 1) 100%); */
+  background-color: #373a44;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; */
+  z-index: 2;  
+}

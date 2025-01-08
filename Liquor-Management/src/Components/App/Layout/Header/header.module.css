@@ -1,0 +1,36 @@
+.header {
+    height: 4rem;
+    font-size: xx-large;
+    display: flex;
+    /* Center the text */
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    display: inline;
+    font-size: xx-large;
+}
+
+.logo {
+    font-weight: 900;
+    padding-left: 1rem;
+    color: #027a7b;
+}
+
+.logout {
+    font-size: 1rem;
+    margin-right: 2rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    color:#000000;
+    border-radius: 1rem;
+}
+
+.logout:hover {
+    background-color: color-mix(in srgb, var(--backgroundBlue) 85%, white 15%);
+}
+
+.logout:active{
+    font-style: italic;
+}

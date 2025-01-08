@@ -1,0 +1,70 @@
+.app {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.loginHeader {
+    margin: 0%;
+}
+
+.loginBox {
+    min-height: 50%;
+    width: 33.3%;
+    padding: 2rem;
+    border: 2px solid white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #515a5a;
+}
+
+.loginInput {
+    display: block;
+    margin-top: 2em;
+    padding: 0.2rem;
+    border: none;
+    border-radius: 10px;
+}
+
+.loginTextInput {
+    height: 2rem;
+}
+
+.loginCheckbox {
+    display: inline;
+    margin-top: 2em;
+    border: none;
+}
+
+.loginBox ::placeholder {
+    color:gray;
+}
+
+.signInButton {
+    width: 6rem;
+    height: 3rem;
+    border-radius: 12px;
+    background-color: xred;
+}
+
+.loginInput:hover, .signInButton:hover {
+    background-color: var(--backgroundBlue);
+}
+
+.signInButton:active{
+    font-style: italic;
+}
+
+.signInError {
+    color: red;
+}

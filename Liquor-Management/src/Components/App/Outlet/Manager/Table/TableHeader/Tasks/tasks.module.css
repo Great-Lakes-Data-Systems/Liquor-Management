@@ -1,0 +1,45 @@
+.tasks {
+    padding: 2rem;
+    border: 2px solid black;
+    border-radius: 10px;
+    z-index: 4;
+    background-color: white;
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tasks h3, .tasks h2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tasks input {
+    display: block;
+}
+
+.taskButton {
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.taskheader {
+    margin: 0%;
+}
+
+.center {
+    /* Center the text */
+    display: flex;
+    justify-content: center;
+}
+
+.taskTab {
+    background: none;
+    border: none;
+}
+
+.actionsAndFilterStateContainer {
+    display: flex;
+}
