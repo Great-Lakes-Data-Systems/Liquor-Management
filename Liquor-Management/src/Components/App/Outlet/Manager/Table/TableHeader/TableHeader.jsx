@@ -85,7 +85,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>Filter</span>    
           </div>
 
-          {displayFilter && <Filter/>}
+          {displayFilter && <Filter currentGrid={currentGrid}/>}
 
           <div 
             className={`${styles.button} ${displayTasks && styles.active}`}

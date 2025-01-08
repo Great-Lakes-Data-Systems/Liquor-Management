@@ -30,7 +30,7 @@ const ManagerBody = () => {
   const defaultColDef = useMemo(() => {
     return {
       filterParams: {
-        maxNumConditions: 1
+        //maxNumConditions: 1
       }
     };
   }, []);
