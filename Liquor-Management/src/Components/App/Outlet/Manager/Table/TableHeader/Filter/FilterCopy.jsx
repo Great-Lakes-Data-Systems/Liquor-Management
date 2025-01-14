@@ -4,24 +4,33 @@ import styles from './filter.module.css';
 
 const Filter = ({ currentGrid }) => {
 
-  const [ agFilterTemplate, setAgFilterTemplate] = useState({});
+  const [ agFilterTemplate, setAgFilterTemplate] = useState([]);
   const [filterCount, setFilterCount] = useState(1);
 
-  const applyfilter = () => {
-    console.log(agFilterTemplate);
-    currentGrid.setFilterModel(agFilterTemplate);
-  };
   const addFilterColumn = () => {
-    setFilterCount(old => old++);
+    setFilterCount(filterCount + 1);
   };
 
   const filterColumns = (filterCount) => {
-    let filterArry = Array(filterCount);
-    return filterArry.map((f,index) => {
+    let filterArray = [...Array(filterCount).keys()];
+    return filterArray.map((f,index) => {
       return (
-        <FilterRow key={index} setAgFilterTemplate={setAgFilterTemplate} />
+        <FilterRow key={index} index={index} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />
       );
     });
+  };
+
+  const reducer = (accumulator, currentValue) => {
+    const key = Object.keys(currentValue.filterState)[0];
+    return ( 
+      { ...accumulator, [key]: currentValue.filterState[key] }
+    );
+  };
+
+  const applyfilter = () => {
+    const filterModel = agFilterTemplate.reduce(reducer, {}) ;
+    console.log('filterModel', filterModel);
+    currentGrid.setFilterModel(filterModel);
   };
 
   return (
@@ -31,8 +40,8 @@ const Filter = ({ currentGrid }) => {
         <p className={styles.filterHeader}>In this view show items</p>
       </div>
 
-      <FilterRow agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate}/>
-      {/* {filterColumns(filterCount)} */}
+      {/* <FilterRow agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate}/> */}
+      {filterColumns(filterCount)}
 
       <hr/>
 

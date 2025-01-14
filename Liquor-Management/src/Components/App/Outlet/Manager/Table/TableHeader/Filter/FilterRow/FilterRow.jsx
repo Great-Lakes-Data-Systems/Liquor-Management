@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from '../filter.module.css';
 import ArrowIcon from '../../../../../../../../assets/icons/DownArrowIcon';
 
-const FilterRow = ({ agFilterTemplate, setAgFilterTemplate }) => {
+const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
 
   // Name of column to filter on
   const [column, setColumn] = useState('type');
@@ -51,7 +51,10 @@ const FilterRow = ({ agFilterTemplate, setAgFilterTemplate }) => {
           };
         })
       }};
-    setAgFilterTemplate({...agFilterTemplate, ...filterState});
+    setAgFilterTemplate([
+      ...agFilterTemplate.filter((item) => item.index !== index), 
+      {index: index, filterState: filterState}
+    ]);
   }, [allcheckedSizes, column, filterTo, filterType, filterValue]);
 
   return (
