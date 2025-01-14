@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import styles from './filter.module.css';
-import ArrowIcon from '../../../../../../../assets/icons/DownArrowIcon';
+import styles from '../filter.module.css';
+import ArrowIcon from '../../../../../../../../assets/icons/DownArrowIcon';
 
-const Filter = ({ currentGrid }) => {
+const FilterRow = ({ agFilterTemplate, setAgFilterTemplate }) => {
 
   // Name of column to filter on
   const [column, setColumn] = useState('type');
@@ -32,7 +32,7 @@ const Filter = ({ currentGrid }) => {
     column === 'size' && setFilterType('equals');
   }, [column]);
 
-  const applyfilter = () => {
+  useEffect( () => {
     let filterState = {[column]: {
       filterType: (column === 'cost' || column === 'MSRP') ? 'number' : 'text',
       type: filterType,
@@ -51,33 +51,26 @@ const Filter = ({ currentGrid }) => {
           };
         })
       }};
-    console.log(filterState);
-    currentGrid.setFilterModel(filterState);
-  };
+    setAgFilterTemplate({...agFilterTemplate, ...filterState});
+  }, [allcheckedSizes, column, filterTo, filterType, filterValue]);
 
   return (
-    <div className={styles.filterComponent}>
-
-      <div>
-        <p className={styles.filterHeader}>In this view show items</p>
-      </div>
-
-      <div>
-        <label htmlFor='columnFilterId'>Where </label>
-        <select name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
-          <option value='type'>Type</option>
-          <option value='size'>Size</option>
-          <option value='cost'>Cost</option>
-          <option value='MSRP'>MSRP</option>
-        </select>
+    <div>
+      <label htmlFor='columnFilterId'>Where </label>
+      <select name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
+        <option value='type'>Type</option>
+        <option value='size'>Size</option>
+        <option value='cost'>Cost</option>
+        <option value='MSRP'>MSRP</option>
+      </select>
 
 
-        {/* Filter Type */}
-        {column === 'type' && <span> Contains </span>}
+      {/* Filter Type */}
+      {column === 'type' && <span> Contains </span>}
 
-        {column === 'size' && <span> Equals </span>}
+      {column === 'size' && <span> Equals </span>}
 
-        {(column === 'cost' || column === 'MSRP') && 
+      {(column === 'cost' || column === 'MSRP') && 
         <select name='filterType' onChange={e => setFilterType(e.target.value)}>
           <option value='lessThan'>Less than</option>
           <option value='lessThanOrEqual'>Less than or equal to</option>
@@ -86,23 +79,11 @@ const Filter = ({ currentGrid }) => {
           <option value='inRange'>Between</option>
         </select>}
 
-        {/* Value Inputs */}
-        {column === 'type' && 
+      {/* Value Inputs */}
+      {column === 'type' && 
         <input type='text' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(e.target.value)}/>}
 
-        {/* {column === 'size' && 
-        <select name='size' multiple onChange={e => setFilterValue(e.target.value)}>
-          <option value='50 ML'>50 ML</option>
-          <option value='100 ML'>100 ML</option>
-          <option value='200 ML'>200 ML</option>
-          <option value='375 ML'>375 ML</option>
-          <option value='700 ML'>700 ML</option>
-          <option value='750 ML'>750 ML</option>
-          <option value='1000 ML'>1000 ML</option>
-          <option value='1750 ML'>1750 ML</option>
-        </select>} */}
-
-        {column === 'size' && 
+      {column === 'size' && 
         <div className={styles.multipleSelection}>
           <button className={styles.sizeSelectBox} onClick={e => {
             e.preventDefault;
@@ -125,7 +106,7 @@ const Filter = ({ currentGrid }) => {
           </div>}
         </div>}
 
-        {(column === 'cost' || column === 'MSRP') && 
+      {(column === 'cost' || column === 'MSRP') && 
         (filterType === 'inRange' ?
           <>
             <input type='number' placeholder='From' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
@@ -134,17 +115,8 @@ const Filter = ({ currentGrid }) => {
           <input type='number' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
         )}
 
-      </div>
-
-      <hr/>
-
-      <div>
-        <button>Add filter</button>
-        <button onClick={applyfilter}>Apply</button>
-        <button onClick={() => currentGrid.setFilterModel(null)}>Clear all filters</button>
-      </div>
     </div>
   );
 };
 
-export default Filter;
+export default FilterRow;

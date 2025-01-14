@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { inventory } from '../data/inventory';
 import webData from '../Data/webData';
 import Tasks from './Tasks/Tasks';
-import Filter from './Filter/Filter';
+import Filter from './Filter/FilterCopy';
 import styles from './tableHeader.module.css';
 import onExportClick from './exportHook';
 import { logFilter } from './Tasks/FilterLogHook';
@@ -11,6 +11,7 @@ import ListULIcon from '../../../../../../assets/icons/ListULIcon';
 import ListCheckedIcon from '../../../../../../assets/icons/ListCheckedIcon';
 import FilterIcon from '../../../../../../assets/icons/FilterIcon';
 import DownloadIcon from '../../../../../../assets/icons/DownloadIcon';
+import Show from '../../../../../Show/Show';
 
 const BUTTON_ICON_SIZE = '30';
 
@@ -85,7 +86,9 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>Filter</span>    
           </div>
 
-          {displayFilter && <Filter currentGrid={currentGrid}/>}
+          <Show when={displayFilter}>
+            <Filter currentGrid={currentGrid}/>
+          </Show>                    
 
           <div 
             className={`${styles.button} ${displayTasks && styles.active}`}
