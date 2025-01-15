@@ -28,7 +28,8 @@ const Filter = ({ currentGrid }) => {
   };
 
   const applyfilter = () => {
-    const filterModel = agFilterTemplate.reduce(reducer, {}) ;
+    // TODO: Enable two filters on same column
+    const filterModel = agFilterTemplate.reduce(reducer, {});
     console.log('filterModel', filterModel);
     currentGrid.setFilterModel(filterModel);
   };

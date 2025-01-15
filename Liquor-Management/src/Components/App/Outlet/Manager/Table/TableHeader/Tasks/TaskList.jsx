@@ -2,7 +2,7 @@ import styles from './tasks.module.css';
 
 const TaskList = ({ filterStates, currentGrid, setDisplayTasks }) => {
 
-  const loadFilter = task => {
+  const loadFilter = (task) => {
     const filterState = JSON.parse(task.filterState);
     const columnState = JSON.parse(task.columnState);
     currentGrid.setFilterModel(filterState);

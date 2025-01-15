@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { inventory } from '../data/inventory';
+// import { inventory } from '../data/inventory';
 import webData from '../Data/webData';
 import Tasks from './Tasks/Tasks';
 import Filter from './Filter/FilterCopy';
@@ -7,7 +7,8 @@ import styles from './tableHeader.module.css';
 import onExportClick from './exportHook';
 import { logFilter } from './Tasks/FilterLogHook';
 import BookIcon from '../../../../../../assets/icons/BookIcon';
-import ListULIcon from '../../../../../../assets/icons/ListULIcon';
+// import ListULIcon from '../../../../../../assets/icons/ListULIcon';
+import PenIcon from '../../../../../../assets/icons/PenIcon';
 import ListCheckedIcon from '../../../../../../assets/icons/ListCheckedIcon';
 import FilterIcon from '../../../../../../assets/icons/FilterIcon';
 import DownloadIcon from '../../../../../../assets/icons/DownloadIcon';
@@ -21,12 +22,19 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
   const [displayFilter, setDisplayFilter] = useState(false);
   const [filterStates, setFilterStates] = useState([]);
   const [taskName, setTaskName] = useState('');
+  const [customTable, setCustomTable] = useState([]);
   const taskTabRef = useRef(null);
 
   // Loads the table with new data and sets the source of the data
   const setTableData = (rowData, itemSource) => {
     setRowData(rowData);
     setItemSource(itemSource);
+  };
+
+  // Function to be called by applying a raise price task
+  const setCustomizedTableData = (customRowData) => {
+    setCustomTable(customRowData);
+    setTableData(customRowData, 'Customized');
   };
 
   //  Function to add the state of the grid to an array
@@ -57,17 +65,24 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
         <div className={styles.buttonGroupHorizontal}>
 
           <div
-            className={`${styles.button} ${itemSource === 'PriceBook' ? styles.active : ''}`}
-            onClick={() => setTableData(webData, 'PriceBook')}>
-            <BookIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />            
+            className={`${styles.button} ${itemSource === 'PriceBook' && styles.active}`}
+            onClick={() => setTableData(webData, 'PriceBook')}>     
+            <BookIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
             <span className={styles.button_text_span}>PriceBook</span>            
           </div>
 
-          <div
-            className={`${styles.button} ${itemSource === 'Inventory' ? styles.active : ''}`}
+          {/* <div
+            className={`${styles.button} ${itemSource === 'Inventory' && styles.active}`}
             onClick={() => setTableData(inventory, 'Inventory')}>
             <ListULIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
             <span className={styles.button_text_span}>Inventory</span>    
+          </div> */}
+
+          <div
+            className={`${styles.button} ${itemSource === 'Customized' && styles.active}`}
+            onClick={() => setTableData(customTable, 'Customized')}>
+            <PenIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
+            <span className={styles.button_text_span}>Customized</span>    
           </div>
         </div>
 
@@ -105,7 +120,9 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
               taskName={taskName}
               setTaskName={setTaskName}
               currentGrid={currentGrid}
-              taskTabRef={taskTabRef} />
+              taskTabRef={taskTabRef}
+              customTable={customTable}
+              setCustomizedTableData={setCustomizedTableData} />
           }
 
         </div>
