@@ -3,7 +3,7 @@ import CreateTask from './CreateTask';
 import TaskList from './TaskList';
 import styles from './tasks.module.css';
 
-const Tasks = ({ saveFilterState, setDisplayTasks, taskName, setTaskName, filterStates, taskTabRef, currentGrid, setCustomizedTableData }) => {
+const Tasks = ({ saveFilterState, setDisplayTasks, taskName, setTaskName, filterStates, taskTabRef, currentGrid, setRowData }) => {
 
   const [displayCreateTask, setDisplayCreateTask] = useState(true);
   const taskRef = useRef(null);
@@ -37,7 +37,7 @@ const Tasks = ({ saveFilterState, setDisplayTasks, taskName, setTaskName, filter
           taskName={taskName}
           setTaskName={setTaskName}
           currentGrid={currentGrid}
-          setCustomizedTableData={setCustomizedTableData} />
+          setRowData={setRowData} />
         : <TaskList 
           filterStates={filterStates} 
           currentGrid={currentGrid}

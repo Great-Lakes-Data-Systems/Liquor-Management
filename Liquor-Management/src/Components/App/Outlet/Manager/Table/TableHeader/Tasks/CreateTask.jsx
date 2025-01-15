@@ -1,31 +1,32 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
 import { jsxFilter }from './FilterLogHook';
+import { customColumnDef } from '../../managerHooks';
 
-const CreateTask = ({ currentGrid, taskName, setTaskName, saveFilterState, setCustomizedTableData }) => {
+const CreateTask = ({ currentGrid, taskName, setTaskName, saveFilterState, setRowData }) => {
 
   const [increase, setIncrease] = useState({
-    dollar: 0,
-    percentage: 0
+    dollar: '',
+    percentage: ''
   });
 
   function getNewCost(cost) {
     if (increase.dollar)
-      return (Number(cost) + Number(increase.dollar));
+      return (Number(cost) + Number(increase.dollar)).toFixed(2);
     else if (increase.percentage) 
-      return cost * (1 + Number(increase.percentage));
-    else 
-      return cost;
+      return ( cost * (1 + Number(increase.percentage)) ).toFixed(2);
   }
 
   const applyCustomPrices = () => {
     const newCustomTableData = [];
-    currentGrid.forEachNodeAfterFilterAndSort( (rowNode) => {
+    currentGrid.forEachNode( (rowNode) => {
       const customRowNode = JSON.parse(JSON.stringify(rowNode.data));
-      customRowNode.cost = getNewCost(rowNode.data.cost);
+      if (rowNode.displayed)
+        customRowNode.custom = getNewCost(rowNode.data.cost);
       newCustomTableData.push(customRowNode);
     });
-    setCustomizedTableData(newCustomTableData);
+    currentGrid.setGridOption('columnDefs', customColumnDef);
+    setRowData(newCustomTableData);
   };
 
   return (
@@ -40,14 +41,14 @@ const CreateTask = ({ currentGrid, taskName, setTaskName, saveFilterState, setCu
             id='increaseByDollar' 
             placeholder='$' 
             value={increase.dollar} 
-            onChange={(e) => setIncrease({dollar: e.target.value, percentage: 0})}/>
+            onChange={(e) => setIncrease({dollar: e.target.value, percentage: ''})}/>
           <label htmlFor="increaseByPercentage">Increase by percentage </label>
           <input 
             type="number" 
             id='increaseByPercentage' 
             placeholder='%' 
             value={increase.percentage} 
-            onChange={(e) => setIncrease({percentage: e.target.value, dollar: 0})}/>
+            onChange={(e) => setIncrease({percentage: e.target.value, dollar: ''})}/>
         </div>
         <div>
           {jsxFilter(currentGrid.getFilterModel())}

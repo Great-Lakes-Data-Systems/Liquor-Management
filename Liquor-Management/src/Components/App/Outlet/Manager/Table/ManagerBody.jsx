@@ -75,8 +75,7 @@ const ManagerBody = () => {
         setRowData={setRowData}
         setItemSource={setItemSource}
         itemSource={itemSource}
-        currentGrid={gridRef?.current?.api}
-      />
+        currentGrid={gridRef?.current?.api} />
 
       <div className={`ag-theme-quartz ${styles.managerTable}`}>
         <AgGridReact

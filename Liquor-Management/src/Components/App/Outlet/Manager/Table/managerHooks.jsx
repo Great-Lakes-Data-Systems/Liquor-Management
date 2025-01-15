@@ -8,6 +8,13 @@ const numberFilterOptions = {
   filterOptions: ['lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange']
 };
 
+const customDollarFormatter = c => {
+  if (c.value) 
+    return USDollar.format(c.value);
+  else
+    return '';
+};
+
 export const columnDefinitions = [
   { field: 'UPC', flex: 2 },
   { field: 'brand', flex: 3 },
@@ -18,11 +25,22 @@ export const columnDefinitions = [
   { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions }
 ];
 
-export const filterOpenedHandler = (e, currentGrid) => {
+export const customColumnDef = [
+  { field: 'UPC', flex: 2 },
+  { field: 'brand', flex: 3 },
+  { field: 'vendor', flex: 3 },
+  { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
+  { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'] } },
+  { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
+  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
+  { field: 'custom', flex: 1, headerName: 'Custom Price', valueFormatter: customDollarFormatter }
+];
+
+export const filterOpenedHandler = (e, ) => {
   if (e.column.colId === 'size') {
     // e.eGui.innerHTML = null;
     e.eGui.innerHTML = `
-      <div onClick="() => window.setSizeColumnFilter(currentGrid, \'50 ML\')">50 ML</div>
+      <div onClick="() => window.setSizeColumnFilter(currentGrid, '50 ML')">50 ML</div>
       <div>100 ML</div>
       <div>200 ML</div>
       <div>375 ML</div>
