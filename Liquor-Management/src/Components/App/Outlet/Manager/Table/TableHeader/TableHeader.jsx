@@ -20,27 +20,13 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
 
   const [displayTasks, setDisplayTasks] = useState(false);
   const [displayFilter, setDisplayFilter] = useState(false);
-  const [filterStates, setFilterStates] = useState([]);
-  const [taskName, setTaskName] = useState('');
+  const filterTabRef = useRef(null);
   const taskTabRef = useRef(null);
 
   // Loads the table with new data and sets the source of the data
   const setTableData = (rowData, itemSource) => {
     setRowData(rowData);
     setItemSource(itemSource);
-  };
-
-  //  Function to add the state of the grid to an array
-  const saveFilterState = () => {
-    // console.log('FilterModel', currentGrid.getFilterModel());
-    // logFilter(currentGrid.getFilterModel());
-    // console.log('ColumnState', currentGrid.getColumnState());
-    const filterState = JSON.stringify(currentGrid.getFilterModel());
-    const columnState = JSON.stringify(currentGrid.getColumnState());
-    setFilterStates([...filterStates, { taskName, filterState, columnState }]);
-    console.log('Current list of tasks', [...filterStates, { taskName, filterState, columnState }]);
-    setTaskName('');  // Clear the input text
-    setDisplayTasks(false);   // Hide the Tasks popup
   };
 
   return (
@@ -64,6 +50,8 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>PriceBook</span>            
           </div>
 
+          {/* TODO: Decide if we want different tabs in the table */}
+          
           {/* <div
             className={`${styles.button} ${itemSource === 'Inventory' && styles.active}`}
             onClick={() => setTableData(inventory, 'Inventory')}>
@@ -86,16 +74,22 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>Export</span>
           </div>
 
-          <div className={styles.button} onClick={() => {
-            logFilter(currentGrid.getFilterModel());
-            setDisplayFilter(!displayFilter);}
-          }>
+          <div 
+            className={styles.button} 
+            onClick={() => {
+              logFilter(currentGrid.getFilterModel());
+              setDisplayFilter(!displayFilter);
+            }
+                
+            }
+            ref={filterTabRef}
+          >
             <FilterIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
             <span className={styles.button_text_span}>Filter</span>    
           </div>
 
           <Show when={displayFilter}>
-            <Filter currentGrid={currentGrid}/>
+            <Filter currentGrid={currentGrid} filterTabRef={filterTabRef} setDisplayFilter={setDisplayFilter}/>
           </Show>                    
 
           <div 
@@ -105,17 +99,13 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>Tasks</span>    
           </div>
 
-          {displayTasks &&
+          <Show when={displayTasks}>
             <Tasks
-              filterStates={filterStates}
-              saveFilterState={saveFilterState}
               setDisplayTasks={setDisplayTasks}
-              taskName={taskName}
-              setTaskName={setTaskName}
               currentGrid={currentGrid}
               taskTabRef={taskTabRef}
               setRowData={setRowData} />
-          }
+          </Show>
 
         </div>
       </div>

@@ -5,6 +5,7 @@ import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied
 import { columnDefinitions } from './managerHooks';
 import styles from './manager.module.css';
 import TableHeader from './TableHeader/TableHeader';
+// TODO: Get PriceBook from database
 import webData from './Data/webData';
 import TableFooter from './TableFooter';
 import WEModal from '../../../../../WEModal/WEModal';
@@ -30,13 +31,15 @@ const ManagerBody = () => {
   const defaultColDef = useMemo(() => {
     return {
       filterParams: {
-        //maxNumConditions: 1
+        // TODO: Decide if we want this functionality
+        maxNumConditions: 1
       }
     };
   }, []);
 
   // Enable row selection
   const rowSelection = useMemo(() => {
+    // TODO: Decide what user can do with selected rows
     return {
       mode: 'multiRow',
       checkboxes: false,
@@ -91,6 +94,7 @@ const ManagerBody = () => {
 
       <TableFooter selected={gridState?.rowSelection?.length} totalRows={totalRows} itemSource={itemSource} />
 
+      {/* TODO: Fix close button */}
       <WEModal isOpen={modalState} toggle={toggleModal}>
         {modalData}
       </WEModal>

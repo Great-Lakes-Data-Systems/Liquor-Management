@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import FilterRow from './FilterRow/FilterRow';
 import styles from './filter.module.css';
+import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
 
-const Filter = ({ currentGrid }) => {
+const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
+
+  const filterRef = useRef(null);
+
+  useClickOutside(filterRef, (e) => {
+    // If user clicked outside the filter on the tab which toggles its visibilty
+    // let the tab turn display off. Otherwise set display off here
+    if (!filterTabRef.current.contains(e.target))
+      setDisplayFilter(false);
+  });
 
   const [ agFilterTemplate, setAgFilterTemplate] = useState([]);
   const [filterCount, setFilterCount] = useState(1);
@@ -35,7 +45,7 @@ const Filter = ({ currentGrid }) => {
   };
 
   return (
-    <div className={styles.filterComponent}>
+    <div className={styles.filterComponent} ref={filterRef}>
 
       <div>
         <p className={styles.filterHeader}>In this view show items</p>

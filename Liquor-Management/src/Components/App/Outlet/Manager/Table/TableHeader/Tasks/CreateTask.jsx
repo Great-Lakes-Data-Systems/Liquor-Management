@@ -1,33 +1,17 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
 import { jsxFilter }from './FilterLogHook';
-import { customColumnDef } from '../../managerHooks';
+import FilterHooks from './FilterHooks';
 
-const CreateTask = ({ currentGrid, taskName, setTaskName, saveFilterState, setRowData }) => {
+const { saveFilterState, applyCustomPrices } = FilterHooks();
 
+const CreateTask = ({ currentGrid, setRowData, setDisplayTasks }) => {
+
+  const [taskName, setTaskName] = useState('');
   const [increase, setIncrease] = useState({
     dollar: '',
     percentage: ''
   });
-
-  function getNewCost(cost) {
-    if (increase.dollar)
-      return (Number(cost) + Number(increase.dollar)).toFixed(2);
-    else if (increase.percentage) 
-      return ( cost * (1 + Number(increase.percentage)) ).toFixed(2);
-  }
-
-  const applyCustomPrices = () => {
-    const newCustomTableData = [];
-    currentGrid.forEachNode( (rowNode) => {
-      const customRowNode = JSON.parse(JSON.stringify(rowNode.data));
-      if (rowNode.displayed)
-        customRowNode.custom = getNewCost(rowNode.data.cost);
-      newCustomTableData.push(customRowNode);
-    });
-    currentGrid.setGridOption('columnDefs', customColumnDef);
-    setRowData(newCustomTableData);
-  };
 
   return (
     <>
@@ -55,8 +39,16 @@ const CreateTask = ({ currentGrid, taskName, setTaskName, saveFilterState, setRo
         </div>
       </div>
       <div>
-        <button className={styles.taskTab} onClick={applyCustomPrices}><h3>Apply</h3></button>
-        <button className={styles.taskTab} onClick={saveFilterState}><h3>Save</h3></button>
+
+        <button className={styles.taskTab} onClick={() => applyCustomPrices(currentGrid, setRowData, increase)}>
+          <h3>Apply</h3>
+        </button>
+
+        <button className={styles.taskTab} 
+          onClick={() => saveFilterState(currentGrid, taskName, setTaskName, setDisplayTasks, increase)}>
+          <h3>Save</h3>
+        </button>
+
       </div>
     </>
   );

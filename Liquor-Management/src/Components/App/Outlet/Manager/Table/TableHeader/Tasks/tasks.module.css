@@ -43,3 +43,8 @@
 .actionsAndFilterStateContainer {
     display: flex;
 }
+
+.active {
+    background-color: var(--backgroundBlue);
+    color: #000000;
+}

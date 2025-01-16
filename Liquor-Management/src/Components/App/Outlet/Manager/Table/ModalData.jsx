@@ -1,4 +1,5 @@
 const ModalData = ({ data }) => {
+  // TODO: Add proper css
   return (
     <div style={{color: 'red'}}>
       <div>Liquor Code: {data.liquorCode}</div>

@@ -49,13 +49,11 @@ const Login = () => {
 
       responseStatusCode = response.status;
       const json = await response.json();
-      console.log('response', response, 'json', json);
       
       // If response from server is ok and we got a token, 
       // store the token in session storage and go to the home page
       if (responseStatusCode === 200 && json.token) {
         sessionStorage.setItem('token', JSON.stringify(json.token));
-        console.log('Token set. Navigating to home from login');
         navigate('/');
       }
 
@@ -64,7 +62,7 @@ const Login = () => {
       }
     } catch (error) {
       setErrorMessage(error.message);  // Use this message for devlopment
-      // setErrorMessage('Something went wrong');  // Use this message for production
+      // setErrorMessage('Something went wrong');  // TODO: Use this message for production
       // If the server sent an unauthorized code, display the following message to user
       if(responseStatusCode === 401)
         setErrorMessage('The username or password are incorrect');

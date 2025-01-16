@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef } from 'react';
 
 
 const useModal = () => {
@@ -17,8 +17,8 @@ const useModal = () => {
       return;
     }
     setModalState(true);
-  }
-  return { modalState, coordinates, toggleModal }
-}
+  };
+  return { modalState, coordinates, toggleModal };
+};
 
 export default useModal;
