@@ -55,69 +55,79 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
       ...agFilterTemplate.filter((item) => item.index !== index), 
       {index: index, filterState: filterState}
     ]);
-  }, [allcheckedSizes, column, filterTo, filterType, filterValue]);
+  }, [allcheckedSizes, column, filterTo, filterType, filterValue,index]);
 
   return (
-    <div>
-      <label htmlFor='columnFilterId'>Where </label>
-      <select name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
-        <option value='type'>Type</option>
-        <option value='size'>Size</option>
-        <option value='cost'>Cost</option>
-        <option value='MSRP'>MSRP</option>
-      </select>
+    <div className={styles.filter_row_item}>
+      <label className={styles.filter_row_label} htmlFor='columnFilterId'>Where:</label>
+      <div className={styles.filter_row_options}>
 
+        <span>
+          <select style={{width:'100%'}} name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
+            <option value='type'>Type</option>
+            <option value='size'>Size</option>
+            <option value='cost'>Cost</option>
+            <option value='MSRP'>MSRP</option>
+          </select>
+        </span>
+        
 
-      {/* Filter Type */}
-      {column === 'type' && <span> Contains </span>}
+        <span>
+          {/* Filter Type */}
+          {column === 'type' && <span> Contains </span>}
 
-      {column === 'size' && <span> Equals </span>}
+          {column === 'size' && <span> Equals </span>}
 
-      {(column === 'cost' || column === 'MSRP') && 
-        <select name='filterType' onChange={e => setFilterType(e.target.value)}>
-          <option value='lessThan'>Less than</option>
-          <option value='lessThanOrEqual'>Less than or equal to</option>
-          <option value='greaterThan'>Greater than</option>
-          <option value='greaterThanOrEqual'>Greater than or equal to</option>
-          <option value='inRange'>Between</option>
-        </select>}
+          {(column === 'cost' || column === 'MSRP') && 
+            <select name='filterType' onChange={e => setFilterType(e.target.value)}>
+              <option value='lessThan'>Less than</option>
+              <option value='lessThanOrEqual'>Less than or equal to</option>
+              <option value='greaterThan'>Greater than</option>
+              <option value='greaterThanOrEqual'>Greater than or equal to</option>
+              <option value='inRange'>Between</option>
+            </select>}
 
-      {/* Value Inputs */}
-      {column === 'type' && 
-        <input type='text' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(e.target.value)}/>}
+          {/* Value Inputs */}
+          {column === 'type' && 
+            <input type='text' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(e.target.value)}/>}
 
-      {column === 'size' && 
-        <div className={styles.multipleSelection}>
-          <button className={styles.sizeSelectBox} onClick={e => {
-            e.preventDefault;
-            setDisplaySizes(!displaySizes);
-          }}>
-           Select size
-            <ArrowIcon width={16} height={16} />
-          </button>
-          {displaySizes &&
-          <div className={styles.checkBoxes}>
+          {column === 'size' && 
+            <div className={styles.multipleSelection}>
+              <button className={styles.sizeSelectBox} onClick={e => {
+                e.preventDefault;
+                setDisplaySizes(!displaySizes);
+              }}>
+              Select size
+                <ArrowIcon width={16} height={16} />
+              </button>
+              {displaySizes &&
+              <div className={styles.checkBoxes}>
 
-            { allLiquorSizes.map( size => {
-              return(
-                <label htmlFor={size} key={size}>
-                  <input type='checkbox' id={size} onChange={handleCheckboxChange}/>
-                  {size}
-                </label>
-              );
-            }) }
-          </div>}
-        </div>}
+                { allLiquorSizes.map( size => {
+                  return(
+                    <label htmlFor={size} key={size}>
+                      <input type='checkbox' id={size} onChange={handleCheckboxChange}/>
+                      {size}
+                    </label>
+                  );
+                }) }
+              </div>}
+            </div>}
 
-      {(column === 'cost' || column === 'MSRP') && 
-        (filterType === 'inRange' ?
-          <>
-            <input type='number' placeholder='From' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
-            <input type='number' placeholder='To' value={filterTo} onChange={e => setFilterTo(Number(e.target.value))}/>
-          </> :
-          <input type='number' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
-        )}
+          {(column === 'cost' || column === 'MSRP') && 
+            (filterType === 'inRange' ?
+              <>
+              
+                <input type='number' placeholder='From' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
+                <input type='number' placeholder='To' value={filterTo} onChange={e => setFilterTo(Number(e.target.value))}/>
+              </> :
+              <input type='number' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
+            )}
+        </span>
 
+      </div>
+
+      <button>Close</button>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import FilterRow from './FilterRow/FilterRow';
 import styles from './filter.module.css';
 import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
+// import Select from '../../../../../../Select/Select';
 
 const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
 
@@ -16,10 +17,17 @@ const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
 
   const [ agFilterTemplate, setAgFilterTemplate] = useState([]);
   const [filterCount, setFilterCount] = useState(1);
+  // const [filterRows, setFilterRows] = useState([ <FilterRow key={0} index={0} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />]);
 
   const addFilterColumn = () => {
     setFilterCount(filterCount + 1);
+    // const nextIndex = filterRows.length;
+    // setFilterRows([ ...filterRows, <FilterRow key={nextIndex} index={nextIndex} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />]);
   };
+
+  // const removeFilterColumn = (index) => {
+  //   setFilterRows(filterRows.filter((item) => item.index !== index));
+  // };
 
   const filterColumns = (filterCount) => {
     let filterArray = [...Array(filterCount).keys()];
@@ -47,16 +55,21 @@ const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
   return (
     <div className={styles.filterComponent} ref={filterRef}>
 
-      <div>
-        <p className={styles.filterHeader}>In this view show items</p>
+      
+      <h2 className={styles.filterHeader}>Create Filters</h2>
+      {/* <Select placeholder="Filter by" options={['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'].map(o => ({id:o,value:o,label:o}))}/> */}
+      <div className={styles.filter_table_row}>
+        {/* <FilterRow agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate}/> */}
+        {filterColumns(filterCount)}
+        {/* {[...filterRows]} */}
       </div>
-
-      {/* <FilterRow agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate}/> */}
-      {filterColumns(filterCount)}
+      
 
       <hr/>
 
-      <div>
+
+
+      <div className={styles.filter_button_row}>
         <button onClick={addFilterColumn}>Add filter</button>
         <button onClick={applyfilter}>Apply</button>
         <button onClick={() => currentGrid.setFilterModel(null)}>Clear all filters</button>

@@ -32,8 +32,8 @@ const Login = () => {
       localStorage.setItem('password', passwordValue);
     } else {
       localStorage.setItem('rememberMe', 'unchecked');
-      localStorage.setItem('username', undefined);
-      localStorage.setItem('password', undefined);
+      localStorage.removeItem('username');
+      localStorage.removeItem('password');
     }
 
     let responseStatusCode = undefined;

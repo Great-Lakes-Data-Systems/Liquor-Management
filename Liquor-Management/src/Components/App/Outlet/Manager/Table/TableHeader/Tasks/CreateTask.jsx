@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
 import { jsxFilter }from './FilterLogHook';
-import FilterHooks from './FilterHooks';
-
-const { saveFilterState, applyCustomPrices } = FilterHooks();
+import { saveFilterState, applyCustomPrices } from './TaskHooks';
 
 const CreateTask = ({ currentGrid, setRowData, setDisplayTasks }) => {
 

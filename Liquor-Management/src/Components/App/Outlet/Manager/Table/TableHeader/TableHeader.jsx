@@ -79,9 +79,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             onClick={() => {
               logFilter(currentGrid.getFilterModel());
               setDisplayFilter(!displayFilter);
-            }
-                
-            }
+            } }
             ref={filterTabRef}
           >
             <FilterIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />

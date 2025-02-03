@@ -1,8 +1,6 @@
 import { useState, useRef } from 'react';
 import styles from './tasks.module.css';
-import FilterHooks from './FilterHooks';
-
-const { applyCustomPrices } = FilterHooks();
+import { applyCustomPrices } from './TaskHooks';
 
 const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
 
