@@ -1,18 +1,34 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import CreateTask from './CreateTask';
 import TaskList from './TaskList';
 import styles from './tasks.module.css';
-import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
+// import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
 
 const Tasks = ({ setDisplayTasks, taskTabRef, currentGrid, setRowData }) => {
 
   const [displayCreateTask, setDisplayCreateTask] = useState(true);
   const taskRef = useRef(null);
 
+  // // Logic for when clicked outside of popup to hide popup
+  // useClickOutside(taskRef, (event) => {
+  //   if (!taskTabRef.current.contains(event.target)) 
+  //     setDisplayTasks(false);
+  // });
+
   // Logic for when clicked outside of popup to hide popup
-  useClickOutside(taskRef, (event) => {
-    if (!taskTabRef.current.contains(event.target)) 
+  const handleClickOutside = (event) => {
+    if (taskRef.current && !taskRef.current.contains(event.target) && !taskTabRef.current.contains(event.target)) {
       setDisplayTasks(false);
+    }
+  };
+  
+  // Adding the event listener when Tasks pops up
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      // removing the event listener when Tasks is removed
+      document.removeEventListener('click', handleClickOutside, true);
+    };
   });
 
   return (

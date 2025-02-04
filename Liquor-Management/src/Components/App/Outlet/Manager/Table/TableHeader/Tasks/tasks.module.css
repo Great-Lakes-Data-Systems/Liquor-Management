@@ -20,6 +20,8 @@
 }
 
 .taskButton {
+    display: flex;
+    justify-content: space-between;
     border-radius: 5px;
     border: 1px solid black;
     width: 100%;
@@ -40,11 +42,20 @@
     border: none;
 }
 
-.actionsAndFilterStateContainer {
-    display: flex;
-}
-
 .active {
     background-color: var(--backgroundBlue);
     color: #000000;
+}
+
+.task_close_button {
+    display: inline;
+    height: 1rem;
+    width: 1rem;
+    color: red;
+}
+
+.task_close_button :hover {
+    background-color: red;
+    color: black;
+    border-radius: 10px;
 }

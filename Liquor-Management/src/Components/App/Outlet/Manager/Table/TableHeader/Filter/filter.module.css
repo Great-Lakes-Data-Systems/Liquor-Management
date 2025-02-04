@@ -10,9 +10,10 @@
     border: 2px solid black;
     border-radius: 10px;
     background-color: var(--backgroundColor);
-    background-color: snow;
+    background-color: black;
     transform: translate(-50%, -50%);
     z-index: 4;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .filterHeader {
@@ -46,13 +47,17 @@
     display: flex;
     gap: 1rem;
 }
-.filter_row_options > span:first-child {
-    flex: .25;
-}
-.filter_row_options > span:last-child {
+.filter_value {
+    flex: 1;
     display: flex;
     gap: 1rem;
     flex: .75;
+}
+.filter_type_selector{
+    
+}
+.filter_delete_button_span{
+    
 }
 
 

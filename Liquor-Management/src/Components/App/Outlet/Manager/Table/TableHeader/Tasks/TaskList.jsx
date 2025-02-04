@@ -1,14 +1,17 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styles from './tasks.module.css';
-import { applyCustomPrices } from './TaskHooks';
+import CloseIcon from '../../../../../../../assets/icons/CloseIcon';
+import { applyCustomPrices, removeTask } from './TaskHooks';
 
 const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
 
-  const filterStatesRef = useRef(JSON.parse(localStorage.getItem('tasksList')));
+  const [listOfTasks, setListOfTasks] = useState(JSON.parse(localStorage.getItem('tasksList')));
   const [selectedTask, setSelectedTask] = useState();
 
   const executeTask = (task) => {
     currentGrid.setFilterModel(task.filterState);
+    const upcs = task.upcsOfSelectedItems;
+    currentGrid.forEachNode(node => upcs.some((upc) => upc === node.data.UPC) ? node.setSelected(true) : node.setSelected(false));
     applyCustomPrices(currentGrid, setRowData, task.increase);
     currentGrid.applyColumnState({state: task.columnState, applyOrder: true});
     setDisplayTasks(false);
@@ -17,16 +20,23 @@ const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
   return (
     <div>
       <ul>
-        {filterStatesRef.current ?
+        {listOfTasks.length ?
 
-          filterStatesRef.current.map((task, index) => {
+          listOfTasks.map((task, index) => {
             return (
               <li key={task.taskName || index}>
-                <button 
+                <div 
                   className={`${styles.taskButton} ${selectedTask === task && styles.active}`} 
                   onClick={() => setSelectedTask(task)}>
-                  {task.taskName  || 'Unnamed Task'}
-                </button>
+                  <span>{task.taskName  || 'Unnamed Task'}</span>
+
+                  <span 
+                    className={styles.task_close_button} 
+                    onClick={() => removeTask(task, setListOfTasks)}>
+                    <CloseIcon></CloseIcon>
+                  </span>
+                  
+                </div>
               </li>
             );
           })

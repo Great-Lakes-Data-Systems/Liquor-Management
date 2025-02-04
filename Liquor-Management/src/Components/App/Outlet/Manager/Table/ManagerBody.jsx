@@ -15,7 +15,7 @@ import ModalData from './ModalData';
 const ManagerBody = () => {
 
   const gridRef = useRef();
-  const [gridState, setGridState] = useState();
+  const [selectedRowCount, setSelectedRowCount] = useState();
   const [itemSource, setItemSource] = useState('PriceBook');
   const [totalRows, setTotalRows] = useState(0);
   const { modalState, toggleModal } = useModal();
@@ -39,18 +39,18 @@ const ManagerBody = () => {
 
   // Enable row selection
   const rowSelection = useMemo(() => {
-    // TODO: Decide what user can do with selected rows
     return {
       mode: 'multiRow',
-      checkboxes: false,
-      headerCheckbox: false,
+      checkboxes: true,
+      headerCheckbox: true,
       enableClickSelection: true,
     };
   }, []);
 
   // Footer functionality
   const onStateUpdated = useCallback((params) => {
-    setGridState(params.state);  // Used to get number of items
+    const selectedAndDisplayedRows = params.api.getSelectedNodes().filter((node) => node.displayed);
+    setSelectedRowCount(selectedAndDisplayedRows.length); // Setting the number of selected and displayed rows to be shown in the footer
     setTotalRows(params.api.getDisplayedRowCount());
   }, []);
 
@@ -92,7 +92,7 @@ const ManagerBody = () => {
         />
       </div>
 
-      <TableFooter selected={gridState?.rowSelection?.length} totalRows={totalRows} itemSource={itemSource} />
+      <TableFooter selected={selectedRowCount} totalRows={totalRows} itemSource={itemSource} />
 
       {/* TODO: Fix close button */}
       <WEModal isOpen={modalState} toggle={toggleModal}>

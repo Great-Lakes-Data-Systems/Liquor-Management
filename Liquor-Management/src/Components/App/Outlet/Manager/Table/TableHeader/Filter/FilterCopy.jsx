@@ -4,7 +4,7 @@ import styles from './filter.module.css';
 import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
 // import Select from '../../../../../../Select/Select';
 
-const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
+const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) => {
 
   const filterRef = useRef(null);
 
@@ -12,7 +12,7 @@ const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
     // If user clicked outside the filter on the tab which toggles its visibilty
     // let the tab turn display off. Otherwise set display off here
     if (!filterTabRef.current.contains(e.target))
-      setDisplayFilter(false);
+      setDisplayFilter({displayed: false, style: {display: 'none'}});
   });
 
   const [ agFilterTemplate, setAgFilterTemplate] = useState([]);
@@ -32,6 +32,7 @@ const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
   const filterColumns = (filterCount) => {
     let filterArray = [...Array(filterCount).keys()];
     return filterArray.map((f,index) => {
+      debugger;
       return (
         <FilterRow key={index} index={index} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />
       );
@@ -53,13 +54,12 @@ const Filter = ({ currentGrid, filterTabRef, setDisplayFilter }) => {
   };
 
   return (
-    <div className={styles.filterComponent} ref={filterRef}>
+    <div className={styles.filterComponent} style={displayFilter.style} ref={filterRef}>
 
       
       <h2 className={styles.filterHeader}>Create Filters</h2>
       {/* <Select placeholder="Filter by" options={['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'].map(o => ({id:o,value:o,label:o}))}/> */}
       <div className={styles.filter_table_row}>
-        {/* <FilterRow agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate}/> */}
         {filterColumns(filterCount)}
         {/* {[...filterRows]} */}
       </div>

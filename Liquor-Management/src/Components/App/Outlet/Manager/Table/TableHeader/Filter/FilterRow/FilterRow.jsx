@@ -62,7 +62,7 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
       <label className={styles.filter_row_label} htmlFor='columnFilterId'>Where:</label>
       <div className={styles.filter_row_options}>
 
-        <span>
+        <span className={styles.filter_type_selector}>
           <select style={{width:'100%'}} name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
             <option value='type'>Type</option>
             <option value='size'>Size</option>
@@ -72,7 +72,7 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
         </span>
         
 
-        <span>
+        <span className={styles.filter_value}>
           {/* Filter Type */}
           {column === 'type' && <span> Contains </span>}
 
@@ -125,9 +125,10 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
             )}
         </span>
 
+        <span className={styles.filter_delete_button_span}><button>X</button></span>
+
       </div>
 
-      <button>Close</button>
     </div>
   );
 };

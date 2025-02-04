@@ -19,7 +19,7 @@ const BUTTON_ICON_SIZE = '30';
 const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSource, currentGrid }) => {
 
   const [displayTasks, setDisplayTasks] = useState(false);
-  const [displayFilter, setDisplayFilter] = useState(false);
+  const [displayFilter, setDisplayFilter] = useState({displayed: false, style: {display: 'none'}});
   const filterTabRef = useRef(null);
   const taskTabRef = useRef(null);
 
@@ -78,7 +78,10 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             className={styles.button} 
             onClick={() => {
               logFilter(currentGrid.getFilterModel());
-              setDisplayFilter(!displayFilter);
+              if (!displayFilter.displayed)
+                setDisplayFilter({displayed: true, style: {display: 'flex'}});
+              if (displayFilter.displayed)
+                setDisplayFilter({displayed: false, style: {display: 'none'}});
             } }
             ref={filterTabRef}
           >
@@ -86,9 +89,13 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
             <span className={styles.button_text_span}>Filter</span>    
           </div>
 
-          <Show when={displayFilter}>
-            <Filter currentGrid={currentGrid} filterTabRef={filterTabRef} setDisplayFilter={setDisplayFilter}/>
-          </Show>                    
+          
+          <Filter 
+            currentGrid={currentGrid} 
+            filterTabRef={filterTabRef} 
+            displayFilter={displayFilter} 
+            setDisplayFilter={setDisplayFilter}/>
+                             
 
           <div 
             className={`${styles.button} ${displayTasks && styles.active}`}

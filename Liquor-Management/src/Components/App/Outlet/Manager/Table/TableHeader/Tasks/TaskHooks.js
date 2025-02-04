@@ -1,15 +1,24 @@
 import { customColumnDef } from '../../managerHooks';
 
-//  Function to add the state of the grid to an array
+//  Function to add a task to local storage
 export function saveFilterState( currentGrid, taskName, setTaskName, setDisplayTasks, increase ) {
   const filterState = currentGrid.getFilterModel();
   const columnState = currentGrid.getColumnState();
   const filterStates = JSON.parse(localStorage.getItem('tasksList')) || [];
-  localStorage.setItem('tasksList', JSON.stringify([...filterStates, { taskName, filterState, columnState, increase }]));
+  const selectedItems = currentGrid.getSelectedNodes().filter((node) => node.displayed);
+  const upcsOfSelectedItems = selectedItems.map((rowNode) => rowNode.data.UPC);
+  localStorage.setItem('tasksList', JSON.stringify([...filterStates, { taskName, filterState, columnState, increase, upcsOfSelectedItems }]));
   setTaskName('');  // Clear the input text
   setDisplayTasks(false);   // Hide the Tasks popup
-  console.log('tasksList', JSON.parse(localStorage.getItem('tasksList')));
 };
+
+// Function to remove task from local storage
+export function removeTask(task, setListOfTasks) {
+  const oldTaskList = JSON.parse(localStorage.getItem('tasksList'));
+  const newTaskList = oldTaskList.filter((item) => JSON.stringify(item) !== JSON.stringify(task));
+  localStorage.setItem('tasksList', JSON.stringify(newTaskList));
+  setListOfTasks(newTaskList);  // Set the list of tasks in the UI
+}
 
 // Function to get the custom price of an item after increase
 function getNewCost(cost, increase) {
@@ -19,12 +28,12 @@ function getNewCost(cost, increase) {
     return ( cost * (1 + Number(increase.percentage)) ).toFixed(2);
 }
 
-// Function to increase prices of filtered items and display all items
+// Function to increase prices of selected items and display all items
 export function applyCustomPrices(currentGrid, setRowData, increase) {
   const newCustomTableData = [];
   currentGrid.forEachNode( (rowNode) => {
     const customRowNode = JSON.parse(JSON.stringify(rowNode.data));
-    if (rowNode.displayed)
+    if (rowNode.selected && rowNode.displayed)
       customRowNode.custom = getNewCost(rowNode.data.cost, increase);
     newCustomTableData.push(customRowNode);
   });
