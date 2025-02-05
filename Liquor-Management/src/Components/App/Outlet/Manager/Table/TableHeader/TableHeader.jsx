@@ -4,7 +4,7 @@ import webData from '../Data/webData';
 import Tasks from './Tasks/Tasks';
 import Filter from './Filter/FilterCopy';
 import styles from './tableHeader.module.css';
-import onExportClick from './exportHook';
+import exportData from './exportHook';
 import { logFilter } from './Tasks/FilterLogHook';
 import BookIcon from '../../../../../../assets/icons/BookIcon';
 // import ListULIcon from '../../../../../../assets/icons/ListULIcon';
@@ -29,9 +29,17 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
     setItemSource(itemSource);
   };
 
+  const onExportClick = () => {
+    const csvExportParams = {
+      columnSeparator: localStorage.getItem('colSeparator'),
+      columnKeys: ['UPC','brand','vendor','type','size','cost','MSRP','custom']  // Only export these columns (not checkbox column)
+    };
+    exportData(currentGrid.getDataAsCsv(csvExportParams));
+  };
+
   return (
     <div className={styles.tableHeader}>
-
+      
       <input
         type='text'
         placeholder='Search'
@@ -42,7 +50,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
 
       <div className={styles.buttonContainer}>
         <div className={styles.buttonGroupHorizontal}>
-
+          
           <div
             className={`${styles.button} ${itemSource === 'PriceBook' && styles.active}`}
             onClick={() => setTableData(webData, 'PriceBook')}>     
@@ -69,7 +77,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
 
         <div className={styles.buttonGroupHorizontal}>
 
-          <div className={styles.button} onClick={() => onExportClick(currentGrid.getDataAsCsv())}>
+          <div className={styles.button} onClick={onExportClick}>
             <DownloadIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
             <span className={styles.button_text_span}>Export</span>
           </div>

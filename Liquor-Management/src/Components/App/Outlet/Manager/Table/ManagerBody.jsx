@@ -32,7 +32,7 @@ const ManagerBody = () => {
     return {
       filterParams: {
         // TODO: Decide if we want this functionality
-        maxNumConditions: 1
+        // maxNumConditions: 1
       }
     };
   }, []);

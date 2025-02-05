@@ -16,27 +16,15 @@ const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) 
   });
 
   const [ agFilterTemplate, setAgFilterTemplate] = useState([]);
-  const [filterCount, setFilterCount] = useState(1);
-  // const [filterRows, setFilterRows] = useState([ <FilterRow key={0} index={0} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />]);
+  const [filterCount, setFilterCount] = useState([0]);
 
   const addFilterColumn = () => {
-    setFilterCount(filterCount + 1);
-    // const nextIndex = filterRows.length;
-    // setFilterRows([ ...filterRows, <FilterRow key={nextIndex} index={nextIndex} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />]);
+    // Adding a new number at end of array with value of 1 more than last value
+    setFilterCount([...filterCount, filterCount.at(-1) + 1]);
   };
 
-  // const removeFilterColumn = (index) => {
-  //   setFilterRows(filterRows.filter((item) => item.index !== index));
-  // };
-
-  const filterColumns = (filterCount) => {
-    let filterArray = [...Array(filterCount).keys()];
-    return filterArray.map((f,index) => {
-      debugger;
-      return (
-        <FilterRow key={index} index={index} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} />
-      );
-    });
+  const removeFilterRowComponent = (index) => {
+    setFilterCount(filterCount.filter((id) => id !== index));
   };
 
   const reducer = (accumulator, currentValue) => {
@@ -60,19 +48,14 @@ const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) 
       <h2 className={styles.filterHeader}>Create Filters</h2>
       {/* <Select placeholder="Filter by" options={['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'].map(o => ({id:o,value:o,label:o}))}/> */}
       <div className={styles.filter_table_row}>
-        {filterColumns(filterCount)}
-        {/* {[...filterRows]} */}
+        {filterCount.map((id) => <FilterRow key={id} index={id} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} removeFilterRowComponent={removeFilterRowComponent} />)}
       </div>
       
 
-      <hr/>
-
-
-
       <div className={styles.filter_button_row}>
-        <button onClick={addFilterColumn}>Add filter</button>
-        <button onClick={applyfilter}>Apply</button>
-        <button onClick={() => currentGrid.setFilterModel(null)}>Clear all filters</button>
+        <button className={styles.lm_button} onClick={addFilterColumn}>Add filter</button>
+        <button className={styles.lm_button} onClick={applyfilter}>Apply</button>
+        <button className={styles.lm_button} onClick={() => currentGrid.setFilterModel(null)}>Clear all filters</button>
       </div>
     </div>
   );

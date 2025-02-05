@@ -31,9 +31,24 @@
     flex: 1;
     border-radius: 8px;
     padding: .75rem;
-    background-color: var(--secondary-backgroundColor);
     overflow-y: scroll;
 }
+.filter_table_row::-webkit-scrollbar {
+    width: .75rem;
+}
+.filter_table_row::-webkit-scrollbar-track-piece {
+    overflow: visible;
+}
+.filter_table_row::-webkit-scrollbar-track {
+    background-color:  var(--secondary-backgroundColor);
+    border-radius: 6px;
+    overflow: visible;
+}
+.filter_table_row::-webkit-scrollbar-thumb {
+    width: 1rem;
+    background-color: rgba(240, 248, 255, 0.533); border-radius: 6px;
+}
+
 .filter_row_item {
     padding: .75rem .75rem;
     border-radius: 6px;
@@ -46,20 +61,22 @@
 .filter_row_options {
     display: flex;
     gap: 1rem;
+
 }
 .filter_value {
     flex: 1;
     display: flex;
     gap: 1rem;
-    flex: .75;
+    align-items: flex-end;
 }
 .filter_type_selector{
-    
+    flex: 0.15;
 }
 .filter_delete_button_span{
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
 
 .multipleSelection, .sizeSelectBox, .checkBoxes{
     display: inline;
@@ -84,9 +101,42 @@
 .filter_button_row {
     display: flex;
     flex-wrap: nowrap;
+    padding-top: 1rem;
     gap: 1rem;
     justify-content: space-evenly;
 }
-.filter_button_row > button {
+.filter_delete_button {
+    padding: 0 .25rem;
+    padding-top: 3px;
+    margin: 0;
+    border: 0;
+    outline: none;
+    background-color: transparent;
+    box-shadow: 0;
     flex:1;
+    transform: scale(1);
+    transition: transform .3s ease-in-out, color .3s ease-in-out;
+}
+
+.filter_delete_button:hover {
+    color: red;
+    transform: scale(1.09);
+}
+
+.lm_button {
+    flex: .33;
+    padding: .65rem 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    background-color: #3DDC97;
+    box-shadow: 0;
+    border-radius: 4px;
+    font-size: 1.25rem;
+}
+
+@keyframes wiggle {
+    0% { transform: translate(2px, 0);}
+    50% { transform: translate(-2px, 0);}
+    100% { transform: translate(2px, 0);}
 }

@@ -1,5 +1,8 @@
 .tasks {
-    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    padding-top: 1.3rem;
     border: 2px solid black;
     border-radius: 10px;
     z-index: 4;
@@ -7,7 +10,11 @@
     position: absolute;
     top: 50%;  
     left: 50%;
+    height: 300px;
+    width: 350px;
     transform: translate(-50%, -50%);
+    background-color: black;
+    color: var(--fontColor);
 }
 
 .tasks h3, .tasks h2 {
@@ -19,16 +26,76 @@
     display: block;
 }
 
+.taskheader {
+    margin: 0%;
+}
+
+.task_page_tab_container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: .2rem;
+}
+
+.task_page_tab {
+    padding: .5;
+    margin: 0;
+    margin-bottom: 1rem;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: 0;
+    color: var(--fontColor);
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 4px;
+    transition: color .2s ease-in-out;
+}
+.task_page_tab:hover {
+    color: #FF8C42;
+}
+.active_tab {
+    background-color: #00BFFF;
+}
+
+.create_task_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.create_task_body {
+    flex: 1;
+}
+
+.create_task_buttons_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.create_task_button {
+    padding: .5;
+    margin: 0;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: 0;
+    color: var(--fontColor);
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 4px;
+    transition: color .2s ease-in-out;
+}
+
+.create_task_button:hover {
+    background-color: #FF8C42;
+}
+
 .taskButton {
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
     border: 1px solid black;
     width: 100%;
-}
-
-.taskheader {
-    margin: 0%;
 }
 
 .center {
@@ -40,6 +107,7 @@
 .taskTab {
     background: none;
     border: none;
+    color: var(--fontColor);
 }
 
 .active {

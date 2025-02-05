@@ -1,32 +1,32 @@
-import { CSSTransition } from "react-transition-group";
-import WEPortal from "../WEModal/WEPortal";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { CSSTransition } from 'react-transition-group';
+import WEPortal from '../WEModal/WEPortal';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import styles from './loader.module.css';
-import useEventListener from "../../hooks/useEventListener";
-import { publish, subscribe, unsubscribe } from "../../events";
+import useEventListener from '../../hooks/useEventListener';
+import { publish, subscribe, unsubscribe } from '../../events';
 
 
 const defaultConfig = {
-  portalWrapperId: "loader_portal",
+  portalWrapperId: 'loader_portal',
   transition: {
     timeout: {entry:0,exit:500},
     unmountOnExit: true,
-    classNames: "we-modal__container-scale-in-left"
+    classNames: 'we-modal__container-scale-in-left'
   },
   showCloseButton: true
 
-}
+};
 
 
 const loader = {
   loading(){
-    publish('startloading')
+    publish('startloading');
   },
   loaded(){
     publish('endloading');
   }
-}
+};
 
 
 const LoaderModal = ({  config }) => {
@@ -39,16 +39,16 @@ const LoaderModal = ({  config }) => {
 
   const toggleLoader = (e) => {
     setShowLoading(!showLoading);
-  }
+  };
 
   useEffect(() => {
     subscribe('startloading',toggleLoader);
     subscribe('endloading',toggleLoader);
     return () => {
-      unsubscribe('startloading',toggleLoader)
-      unsubscribe('endloading',toggleLoader)
-    }
-  })
+      unsubscribe('startloading',toggleLoader);
+      unsubscribe('endloading',toggleLoader);
+    };
+  });
 
   
 
@@ -71,8 +71,8 @@ const LoaderModal = ({  config }) => {
         }}
       >
         <div className={styles.loader} ref={modalRef}>
-              <div className={styles.spinner}></div>
-            </div>
+          <div className={styles.spinner}></div>
+        </div>
 
         {/* <div className={`${styles.modal_container} ${styles.scale_in} ${styles.center}`} style={{...props.style}} ref={modalRef}>  
 
@@ -84,6 +84,6 @@ const LoaderModal = ({  config }) => {
 
     </WEPortal>
   );
-}
+};
 
 export { LoaderModal, loader };

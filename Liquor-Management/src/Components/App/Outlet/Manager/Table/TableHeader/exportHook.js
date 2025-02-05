@@ -1,4 +1,4 @@
-const onExportClick = async (itemsData) => {
+const exportData = async (itemsData) => {
   // TODO: Enable value separator chooser
   try { 
     const fileBlob = new Blob([itemsData],{type: 'text/csv'});
@@ -21,4 +21,4 @@ const onExportClick = async (itemsData) => {
   }
 };
 
-export default onExportClick;
+export default exportData;

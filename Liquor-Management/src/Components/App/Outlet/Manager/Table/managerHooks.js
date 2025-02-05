@@ -15,12 +15,14 @@ const customDollarFormatter = c => {
     return '';
 };
 
+const NUMBER_OF_SIZES = 8;
+
 export const columnDefinitions = [
   { field: 'UPC', flex: 2 },
   { field: 'brand', flex: 3 },
   { field: 'vendor', flex: 3 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
-  { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'] } },
+  { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
   { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
   { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions }
 ];
@@ -30,7 +32,7 @@ export const customColumnDef = [
   { field: 'brand', flex: 3 },
   { field: 'vendor', flex: 3 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
-  { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'] } },
+  { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
   { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
   { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
   { field: 'custom', flex: 1, headerName: 'Custom Price', valueFormatter: customDollarFormatter }
@@ -61,21 +63,4 @@ window.setSizeColumnFilter = async (currentGrid, filter) => {
 
   // Tell grid to run filter operation again
   currentGrid.onFilterChanged();
-};
-
-
-
-// Default Column Definitions
-export const defaultColDef = {
-  filterParams: {
-    maxNumConditions: 1
-  }
-};
-
-// Enable row selection
-export const rowSelection = {
-  mode: 'multiRow',
-  checkboxes: false,
-  headerCheckbox: false,
-  enableClickSelection: true,
 };

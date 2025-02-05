@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from '../filter.module.css';
 import ArrowIcon from '../../../../../../../../assets/icons/DownArrowIcon';
+import TrashIcon from '../../../../../../../../assets/icons/TrashIcon';
 
-const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
+const ICON_SIZE = 24;
+
+const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate, removeFilterRowComponent }) => {
 
   // Name of column to filter on
   const [column, setColumn] = useState('type');
@@ -56,13 +59,14 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
       {index: index, filterState: filterState}
     ]);
   }, [allcheckedSizes, column, filterTo, filterType, filterValue,index]);
-
+    
   return (
     <div className={styles.filter_row_item}>
-      <label className={styles.filter_row_label} htmlFor='columnFilterId'>Where:</label>
+      
       <div className={styles.filter_row_options}>
 
         <span className={styles.filter_type_selector}>
+          <label className={styles.filter_row_label} htmlFor='columnFilterId'>Where:</label>
           <select style={{width:'100%'}} name='column' id='columnFilterId' value={column} onChange={e => setColumn(e.target.value)}>
             <option value='type'>Type</option>
             <option value='size'>Size</option>
@@ -125,7 +129,11 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate }) => {
             )}
         </span>
 
-        <span className={styles.filter_delete_button_span}><button>X</button></span>
+        <span className={styles.filter_delete_button_span} onClick={() => removeFilterRowComponent(index)}>
+          <button className={styles.filter_delete_button}>
+            <TrashIcon width={ICON_SIZE} height={ICON_SIZE}/>
+          </button>
+        </span>
 
       </div>
 

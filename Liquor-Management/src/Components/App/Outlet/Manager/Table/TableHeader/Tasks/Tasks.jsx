@@ -34,9 +34,9 @@ const Tasks = ({ setDisplayTasks, taskTabRef, currentGrid, setRowData }) => {
   return (
     <div className={styles.tasks} ref={taskRef}>
       <h1 className={`${styles.taskheader} ${styles.center}`}>Tasks</h1>
-      <div>
-        <button className={styles.taskTab} onClick={() => setDisplayCreateTask(true)}><h3>Create Task</h3></button>
-        <button className={styles.taskTab} onClick={() => setDisplayCreateTask(false)}><h3>Load Task</h3></button>
+      <div className={styles.task_page_tab_container}>
+        <button className={`${styles.task_page_tab} ${displayCreateTask && styles.active_tab}`} onClick={() => setDisplayCreateTask(true)}>Create Task</button>
+        <button className={`${styles.task_page_tab} ${!displayCreateTask && styles.active_tab}`} onClick={() => setDisplayCreateTask(false)}>Load Task</button>
       </div>
       {displayCreateTask 
         ? <CreateTask 
