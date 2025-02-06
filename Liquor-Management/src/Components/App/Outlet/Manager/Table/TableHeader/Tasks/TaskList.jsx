@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
-import CloseIcon from '../../../../../../../assets/icons/CloseIcon';
+// import CloseIcon from '../../../../../../../assets/icons/CloseIcon';
 import { applyCustomPrices, removeTask } from './TaskHooks';
+import TrashIcon from '../../../../../../../assets/icons/TrashIcon';
+
+const BUTTON_ICON_SIZE = 24;
 
 const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
 
@@ -18,34 +21,36 @@ const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
   };
 
   return (
-    <div>
-      <ul>
-        {listOfTasks.length ?
+    <>
+      {listOfTasks.length ?
+        <div className={styles.load_task_container}>
+          <div className={styles.task_list}>
+            <ul className={styles.task_list_ul}>
+              {listOfTasks.map((task, index) => {
+                return (
+                  <li key={task.taskName || index}>
+                    <div 
+                      className={`${styles.taskButton} ${selectedTask === task && styles.active}`} 
+                      onClick={() => setSelectedTask(task)}>
+                      <span>{task.taskName  || 'Unnamed Task'}</span>
 
-          listOfTasks.map((task, index) => {
-            return (
-              <li key={task.taskName || index}>
-                <div 
-                  className={`${styles.taskButton} ${selectedTask === task && styles.active}`} 
-                  onClick={() => setSelectedTask(task)}>
-                  <span>{task.taskName  || 'Unnamed Task'}</span>
-
-                  <span 
-                    className={styles.task_close_button} 
-                    onClick={() => removeTask(task, setListOfTasks)}>
-                    <CloseIcon></CloseIcon>
-                  </span>
+                      <button 
+                        className={styles.task_close_button} 
+                        onClick={() => removeTask(task, setListOfTasks)}>
+                        <TrashIcon  width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
+                      </button>
                   
-                </div>
-              </li>
-            );
-          })
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <button className={styles.create_task_button} onClick={() => executeTask(selectedTask)}>Apply</button>
+        </div>
 
-          : <p>No saved tasks</p>}
-
-      </ul>
-      <button className={styles.taskTab} onClick={() => executeTask(selectedTask)}><h3>Apply</h3></button>
-    </div>
+        : <p>No saved tasks</p>}
+    </>
   );
 };
 

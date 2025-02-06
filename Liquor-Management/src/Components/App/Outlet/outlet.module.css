@@ -3,3 +3,18 @@
     flex-grow: 1;
     padding: 1rem;
 }
+
+.center {
+    /* Center the text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.column_separator_div {
+    padding: 1rem;
+    padding-top: 0;
+    background-color: darkgreen;
+    border: 2px solid white;
+    border-radius: 5px;
+}

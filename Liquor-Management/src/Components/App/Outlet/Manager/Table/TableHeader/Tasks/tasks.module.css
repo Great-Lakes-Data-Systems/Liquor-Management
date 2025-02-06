@@ -15,6 +15,7 @@
     transform: translate(-50%, -50%);
     background-color: black;
     color: var(--fontColor);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .tasks h3, .tasks h2 {
@@ -48,10 +49,11 @@
     font-size: 1.2rem;
     font-weight: 800;
     border-radius: 4px;
-    transition: color .2s ease-in-out;
+    transition: background-color .2s ease-in-out;
+    border: 1px solid white;
 }
 .task_page_tab:hover {
-    color: #FF8C42;
+    background-color: #FF8C42;
 }
 .active_tab {
     background-color: #00BFFF;
@@ -83,11 +85,48 @@
     font-size: 1.2rem;
     font-weight: 800;
     border-radius: 4px;
-    transition: color .2s ease-in-out;
+    transition: background-color .2s ease-in-out;
+    border: 1px solid white;
 }
 
 .create_task_button:hover {
     background-color: #FF8C42;
+}
+.create_task_button:active {
+    background-color: #00BFFF;
+}
+
+.load_task_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
+}
+.task_list {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.task_list::-webkit-scrollbar {
+    width: .75rem;
+}
+.task_list::-webkit-scrollbar-track-piece {
+    overflow: visible;
+}
+.task_list::-webkit-scrollbar-track {
+    background-color:  var(--secondary-backgroundColor);
+    border-radius: 6px;
+    overflow: visible;
+}
+.task_list::-webkit-scrollbar-thumb {
+    width: 1rem;
+    background-color: rgba(240, 248, 255, 0.533); border-radius: 6px;
+}
+.task_list_ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .taskButton {
@@ -96,6 +135,11 @@
     border-radius: 5px;
     border: 1px solid black;
     width: 100%;
+    padding: .2rem;
+    background-color: #FF8C42;
+    color: white;
+    margin: .25rem;
+    font-size: 1.25rem;
 }
 
 .center {
@@ -111,19 +155,33 @@
 }
 
 .active {
-    background-color: var(--backgroundBlue);
+    background-color: #00BFFF;
     color: #000000;
 }
 
 .task_close_button {
+    margin: 0;
+    border: 0;
+    outline: none;
+    background-color: transparent;
+    box-shadow: 0;
     display: inline;
-    height: 1rem;
-    width: 1rem;
-    color: red;
+    color: black;
+    padding-right: 1rem;
+    transition: transform .3s ease-in-out;
 }
 
-.task_close_button :hover {
-    background-color: red;
-    color: black;
-    border-radius: 10px;
+.task_close_button:hover {
+    animation-name: wiggle;
+    animation-duration: .6s;
+    animation-iteration-count: infinite;
+    transform: scale(1.5);
+}
+
+@keyframes wiggle {
+    0% { transform: translate(0, 0px);}
+    25% { transform: translate(0, 2px);}
+    50% { transform: translate(0, 0px);}
+    75% { transform: translate(0, -2px);}
+    100% { transform: translate(0, 0px);}
 }

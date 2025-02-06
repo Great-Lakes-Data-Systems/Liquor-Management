@@ -15,6 +15,14 @@ const customDollarFormatter = c => {
     return '';
 };
 
+const customPriceComparator = (valueA, valueB) => {
+  // TODO: Find out why this isn't working
+  if (valueA && valueB) return valueA - valueB;
+  else if (valueA) return valueA;
+  else if (valueB) return valueB;
+  else return 0;
+};
+
 const NUMBER_OF_SIZES = 8;
 
 export const columnDefinitions = [
@@ -23,8 +31,8 @@ export const columnDefinitions = [
   { field: 'vendor', flex: 3 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
   { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
-  { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
-  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions }
+  { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB }
 ];
 
 export const customColumnDef = [
@@ -33,9 +41,9 @@ export const customColumnDef = [
   { field: 'vendor', flex: 3 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
   { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
-  { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
-  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions },
-  { field: 'custom', flex: 1, headerName: 'Custom Price', valueFormatter: customDollarFormatter }
+  { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'custom', flex: 1, headerName: 'Custom Price', valueFormatter: customDollarFormatter, comparator: customPriceComparator }
 ];
 
 export const filterOpenedHandler = (e, ) => {
