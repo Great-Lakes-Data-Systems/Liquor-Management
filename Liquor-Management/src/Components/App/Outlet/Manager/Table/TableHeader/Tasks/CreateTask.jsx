@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './tasks.module.css';
 import { saveFilterState, applyCustomPrices } from './TaskHooks';
 
-const CreateTask = ({ currentGrid, setRowData, setDisplayTasks }) => {
+const CreateTask = ({ currentGrid, setRowData, setDisplayTasks, selected }) => {
 
   const [taskName, setTaskName] = useState('');
   const [increase, setIncrease] = useState({
@@ -15,7 +15,7 @@ const CreateTask = ({ currentGrid, setRowData, setDisplayTasks }) => {
       <div className={styles.create_task_body}>
         <input type="text" placeholder='Task Name' value={taskName} onChange={(e) => setTaskName(e.target.value)} />
         <div>
-          <h4>Actions to increase selected items</h4>
+          <h4>Actions to increase {selected} selected items</h4>
           <label htmlFor="increaseByDollar">Increase by dollar </label>
           <input 
             type="number" 

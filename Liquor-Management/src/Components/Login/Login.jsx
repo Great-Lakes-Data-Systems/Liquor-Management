@@ -69,6 +69,16 @@ const Login = () => {
     }
   }, [navigate, rememberMeValue, usernameValue, passwordValue]);
 
+  // Submit the form when enter key is pressed
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.code === 'Enter' || e.code === 'NumpadEnter') 
+        handleSubmit(e);
+    };
+    document.addEventListener('keydown', listener);
+    return () =>  document.removeEventListener('keydown', listener);
+  }, [handleSubmit]);
+
   return (
     <div className={styles.app}>
       <MainHeader showLogout={false}/>

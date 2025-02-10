@@ -1,12 +1,11 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the Data Grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the Data Grid
 import { columnDefinitions } from './managerHooks';
 import styles from './manager.module.css';
 import TableHeader from './TableHeader/TableHeader';
-// TODO: Get PriceBook from database
-import webData from './Data/webData';
+import Fetch from './Data/Fetch';
 import TableFooter from './TableFooter';
 import WEModal from '../../../../../WEModal/WEModal';
 import useModal from '../../../../../WEModal/hooks/useModal';
@@ -20,9 +19,14 @@ const ManagerBody = () => {
   const [totalRows, setTotalRows] = useState(0);
   const { modalState, toggleModal } = useModal();
   const [modalData, setModalData] = useState();
-
+  
   // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState(webData);
+  const [rowData, setRowData] = useState();
+  
+  const { data, loading } = Fetch();
+  useEffect(() => {
+    !loading && setRowData(data);
+  }, [loading, data]);
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs,] = useState(columnDefinitions);
@@ -68,6 +72,14 @@ const ManagerBody = () => {
     setModalData(<ModalData data={e.data} />);
   };
 
+  const onCellClicked = (e) => {
+    if (e.column.colId === 'OldMsrp') 
+      e.node.updateData({...e.data, OldMsrp: e.data.OldMsrpPerecnt});
+    if (e.column.colId === 'OldCost')
+      e.node.updateData({...e.data, OldCost: e.data.OldCostPerecnt});
+    console.log(e);
+  };
+
   //gridRef?.current?.api.addEventListener('filterOpened', (e) => filterOpenedHandler(e, gridRef.current.api));
 
   return (
@@ -78,7 +90,8 @@ const ManagerBody = () => {
         setRowData={setRowData}
         setItemSource={setItemSource}
         itemSource={itemSource}
-        currentGrid={gridRef?.current?.api} />
+        currentGrid={gridRef?.current?.api}
+        selected={selectedRowCount} />
 
       <div className={`ag-theme-quartz ${styles.managerTable}`}>
         <AgGridReact
@@ -89,6 +102,7 @@ const ManagerBody = () => {
           onStateUpdated={onStateUpdated}
           ref={gridRef}
           onRowDoubleClicked={onRowDoubleClicked}
+          onCellClicked={onCellClicked}
         />
       </div>
 

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 // import { inventory } from '../data/inventory';
-import webData from '../Data/webData';
+import Fetch from '../Data/Fetch';
 import Tasks from './Tasks/Tasks';
 import Filter from './Filter/FilterCopy';
 import styles from './tableHeader.module.css';
@@ -16,12 +16,13 @@ import Show from '../../../../../Show/Show';
 
 const BUTTON_ICON_SIZE = '30';
 
-const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSource, currentGrid }) => {
+const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSource, currentGrid, selected }) => {
 
   const [displayTasks, setDisplayTasks] = useState(false);
   const [displayFilter, setDisplayFilter] = useState({displayed: false, style: {display: 'none'}});
   const filterTabRef = useRef(null);
   const taskTabRef = useRef(null);
+  const { data } = Fetch();
 
   // Loads the table with new data and sets the source of the data
   const setTableData = (rowData, itemSource) => {
@@ -53,7 +54,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
           
           <div
             className={`${styles.button} ${itemSource === 'PriceBook' && styles.active}`}
-            onClick={() => setTableData(webData, 'PriceBook')}>     
+            onClick={() => setTableData( data, 'PriceBook')}>     
             <BookIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
             <span className={styles.button_text_span}>PriceBook</span>            
           </div>
@@ -117,7 +118,8 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
               setDisplayTasks={setDisplayTasks}
               currentGrid={currentGrid}
               taskTabRef={taskTabRef}
-              setRowData={setRowData} />
+              setRowData={setRowData}
+              selected={selected} />
           </Show>
 
         </div>

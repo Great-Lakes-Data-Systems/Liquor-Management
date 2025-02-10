@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser  = require('body-parser');
+const pricebook = require('./webprbk.json');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,6 +31,12 @@ app.use('/login', (req, res) => {
       console.log('sending 401 response');
       res.send(401);
     }
+  });
+
+  app.use('/pricebook', (req, res) => {
+    console.log('\n New pricebook Request ', req.body);
+      res.send(pricebook);
+      
   });
 
 

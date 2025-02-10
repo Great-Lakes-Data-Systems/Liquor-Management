@@ -1,3 +1,5 @@
+import { MarginCellRenderer, ChangeCellRenderer } from './CellRenderers';
+
 // Money Formatter
 const USDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -28,21 +30,27 @@ const NUMBER_OF_SIZES = 8;
 export const columnDefinitions = [
   { field: 'UPC', flex: 2 },
   { field: 'brand', flex: 3 },
-  { field: 'vendor', flex: 3 },
+  { field: 'vendor', flex: 2 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
   { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
+  { field: 'CostChange', flex: 1.4, cellRenderer: ChangeCellRenderer },
+  { field: 'MsrpChange', flex: 1.4, cellRenderer: ChangeCellRenderer },
   { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
-  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB }
+  { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'Margin', flex: 1, cellRenderer: MarginCellRenderer },
 ];
 
 export const customColumnDef = [
   { field: 'UPC', flex: 2 },
   { field: 'brand', flex: 3 },
-  { field: 'vendor', flex: 3 },
+  { field: 'vendor', flex: 2 },
   { field: 'type', flex: 2, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains'] } },
   { field: 'size', flex: 1, filter: 'agTextColumnFilter', filterParams: { filterOptions: ['contains', 'equals'], maxNumConditions: NUMBER_OF_SIZES } },
+  { field: 'CostChange', flex: 1.5, valueFormatter: c => USDollar.format(c.value), comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'MsrpChange', flex: 1.5, valueFormatter: c => USDollar.format(c.value), comparator: (valueA, valueB) => valueA - valueB },
   { field: 'cost', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
   { field: 'MSRP', flex: 1, valueFormatter: c => USDollar.format(c.value), filter: 'agNumberColumnFilter', filterParams: numberFilterOptions, comparator: (valueA, valueB) => valueA - valueB },
+  { field: 'Margin', flex: 1, valueFormatter: c => USDollar.format(c.value) },
   { field: 'custom', flex: 1, headerName: 'Custom Price', valueFormatter: customDollarFormatter, comparator: customPriceComparator }
 ];
 

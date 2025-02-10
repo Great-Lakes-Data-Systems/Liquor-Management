@@ -4,7 +4,7 @@ import TaskList from './TaskList';
 import styles from './tasks.module.css';
 // import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
 
-const Tasks = ({ setDisplayTasks, taskTabRef, currentGrid, setRowData }) => {
+const Tasks = ({ setDisplayTasks, taskTabRef, currentGrid, setRowData, selected }) => {
 
   const [displayCreateTask, setDisplayCreateTask] = useState(true);
   const taskRef = useRef(null);
@@ -42,7 +42,8 @@ const Tasks = ({ setDisplayTasks, taskTabRef, currentGrid, setRowData }) => {
         ? <CreateTask 
           currentGrid={currentGrid}
           setRowData={setRowData}
-          setDisplayTasks={setDisplayTasks} />
+          setDisplayTasks={setDisplayTasks}
+          selected={selected} />
         : <TaskList  
           currentGrid={currentGrid}
           setDisplayTasks={setDisplayTasks}
