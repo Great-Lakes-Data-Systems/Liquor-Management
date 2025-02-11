@@ -1,5 +1,6 @@
 import MainHeader from '../App/Layout/Header/MainHeader';
 import Footer from '../App/Layout/Footer/Footer';
+import btybglds from '../../assets/images/btybglds.png';
 import styles from './login.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -83,6 +84,7 @@ const Login = () => {
     <div className={styles.app}>
       <MainHeader showLogout={false}/>
       <div className={styles.body}>
+        <div className={styles.bgd_gradient}></div>
         <div className={styles.loginBox}>
           <h3 className={styles.loginHeader}>Login</h3>
           <form onSubmit={handleSubmit}>
@@ -113,6 +115,7 @@ const Login = () => {
           <p className={styles.signInError}>{errorMessage}</p>
         </div>
       </div>
+      <img src={btybglds} alt="Brought to you by GLDS" className={styles.btybglds_img}/>
       <Footer />
     </div>
   );

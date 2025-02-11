@@ -10,6 +10,15 @@
     flex-grow: 1;
     display: flex;
     flex-direction: row;
+    background-image: url('../../assets/images/paolo-bendandi-2kLHSCnMQZ8-unsplash.jpg');
+    background-size: cover;
+}
+
+.bgd_gradient {
+    background: black;
+    opacity: 0.27;
+    height: 100%;
+    width: 100%;
 }
 
 .loginHeader {
@@ -67,4 +76,12 @@
 
 .signInError {
     color: red;
+}
+
+.btybglds_img {
+    position: absolute;
+    bottom: 2.75em;
+    left: .75em;
+    max-height: 50px;
+    max-width: fit-content;
 }

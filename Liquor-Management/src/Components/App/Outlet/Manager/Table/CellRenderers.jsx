@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import CaretDownFillIcon from '../../../../../assets/icons/CaretDownFillIcon';
+import CaretUpFillIcon from '../../../../../assets/icons/CaretUpFillIcon';
 
 // Money Formatter
 const USDollar = new Intl.NumberFormat('en-US', {
@@ -9,7 +11,8 @@ const USDollar = new Intl.NumberFormat('en-US', {
 export const MarginCellRenderer = (params) => {
   const [show, setShow] = useState(true);
   return (
-    <div onClick={() => setShow(!show)}>
+    <div onClick={() => setShow(!show)} style={{display: 'flex', alignItems: 'center', color: 'green'}}>
+      <CaretUpFillIcon color='green'/>
       {
         show ? 
           <span>%{params.value.percent}</span> :
@@ -22,7 +25,12 @@ export const MarginCellRenderer = (params) => {
 export const ChangeCellRenderer = (params) => {
   const [show, setShow] = useState(true);
   return (
-    <div onClick={() => setShow(!show)}>
+    <div onClick={() => setShow(!show)} style={{display: 'flex', alignItems: 'center', color: params.value.direction ? 'green' : 'red'}}>
+      {
+        params.value.direction ? 
+          <CaretUpFillIcon color='green'/> :
+          <CaretDownFillIcon color='red'/>
+      }
       {
         show ? 
           USDollar.format(params.value.dollar):
