@@ -2,7 +2,7 @@ import styles from './outlet.module.css';
 
 const Settings = () => {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${styles.settings_container}`}>
       <h1 className={styles.center}>Settings</h1>
       <div className={styles.column_separator_div}>
         <h2>Change the column separator in export</h2>
@@ -15,6 +15,9 @@ const Settings = () => {
           <option value='|'>pipe</option>
           <option value=' '>space</option>
         </select>
+      </div>
+      <div className={styles.version_container}>
+        <p className={styles.version_p}>Version: 1.0.0</p>
       </div>
     </div>
   );

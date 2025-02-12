@@ -39,3 +39,16 @@ export const ChangeCellRenderer = (params) => {
     </div>
   );
 };
+
+export const CustomPriceCellRenderer = (params) => {
+  const [show, setShow] = useState(true);
+  return (
+    <div onClick={() => {setShow(!show); console.log('params', params);}}>
+      {
+        show ?
+          params.value && USDollar.format(params.value) :
+          ''
+      }
+    </div>
+  );
+};

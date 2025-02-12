@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
-// import CloseIcon from '../../../../../../../assets/icons/CloseIcon';
-import { applyCustomPrices, removeTask } from './TaskHooks';
+import { applySavedCustomPrices, removeTask } from './TaskHooks';
 import TrashIcon from '../../../../../../../assets/icons/TrashIcon';
 
 const BUTTON_ICON_SIZE = 24;
@@ -10,15 +9,6 @@ const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
 
   const [listOfTasks, setListOfTasks] = useState(JSON.parse(localStorage.getItem('tasksList')));
   const [selectedTask, setSelectedTask] = useState();
-
-  const executeTask = (task) => {
-    currentGrid.setFilterModel(task.filterState);
-    const upcs = task.upcsOfSelectedItems;
-    currentGrid.forEachNode(node => upcs.some((upc) => upc === node.data.UPC) ? node.setSelected(true) : node.setSelected(false));
-    applyCustomPrices(currentGrid, setRowData, task.increase);
-    currentGrid.applyColumnState({state: task.columnState, applyOrder: true});
-    setDisplayTasks(false);
-  };
 
   return (
     <>
@@ -46,7 +36,11 @@ const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
               })}
             </ul>
           </div>
-          <button className={styles.create_task_button} onClick={() => executeTask(selectedTask)}>Apply</button>
+          <button 
+            className={styles.create_task_button} 
+            onClick={() => applySavedCustomPrices(currentGrid, setRowData, selectedTask, setDisplayTasks)}>
+              Apply
+          </button>
         </div>
 
         : <p>No saved tasks</p>}

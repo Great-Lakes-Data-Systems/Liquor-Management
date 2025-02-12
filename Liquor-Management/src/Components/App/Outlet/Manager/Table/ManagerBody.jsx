@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the Data Grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the Data Grid
-import { columnDefinitions } from './managerHooks';
+import columnDefinitions from './columnDefinitions';
 import styles from './manager.module.css';
 import TableHeader from './TableHeader/TableHeader';
 import Fetch from './Data/Fetch';
@@ -23,6 +23,7 @@ const ManagerBody = () => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState();
   
+  // Loading the data
   const { data, loading } = Fetch();
   useEffect(() => {
     !loading && setRowData(data);
@@ -72,16 +73,6 @@ const ManagerBody = () => {
     setModalData(<ModalData data={e.data} />);
   };
 
-  const onCellClicked = (e) => {
-    if (e.column.colId === 'OldMsrp') 
-      e.node.updateData({...e.data, OldMsrp: e.data.OldMsrpPerecnt});
-    if (e.column.colId === 'OldCost')
-      e.node.updateData({...e.data, OldCost: e.data.OldCostPerecnt});
-    console.log(e);
-  };
-
-  //gridRef?.current?.api.addEventListener('filterOpened', (e) => filterOpenedHandler(e, gridRef.current.api));
-
   return (
     <div className={styles.managerBody}>
 
@@ -102,7 +93,6 @@ const ManagerBody = () => {
           onStateUpdated={onStateUpdated}
           ref={gridRef}
           onRowDoubleClicked={onRowDoubleClicked}
-          onCellClicked={onCellClicked}
         />
       </div>
 

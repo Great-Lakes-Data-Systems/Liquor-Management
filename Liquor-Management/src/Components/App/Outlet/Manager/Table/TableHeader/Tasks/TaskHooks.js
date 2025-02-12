@@ -1,13 +1,17 @@
-import { customColumnDef } from '../../managerHooks';
+const reducer = (accumulator, rowNode) => {
+  return ( 
+    { ...accumulator, [rowNode.data.UPC]: rowNode.data.UPC }
+  );
+};
 
 //  Function to add a task to local storage
 export function saveFilterState( currentGrid, taskName, setTaskName, setDisplayTasks, increase ) {
   const filterState = currentGrid.getFilterModel();
   const columnState = currentGrid.getColumnState();
-  const filterStates = JSON.parse(localStorage.getItem('tasksList')) || [];
   const selectedItems = currentGrid.getSelectedNodes().filter((node) => node.displayed);
-  const upcsOfSelectedItems = selectedItems.map((rowNode) => rowNode.data.UPC);
-  localStorage.setItem('tasksList', JSON.stringify([...filterStates, { taskName, filterState, columnState, increase, upcsOfSelectedItems }]));
+  const upcsOfSelectedItemsObject = selectedItems.reduce(reducer, {});
+  const filterStates = JSON.parse(localStorage.getItem('tasksList')) || [];
+  localStorage.setItem('tasksList', JSON.stringify([...filterStates, { taskName, filterState, columnState, increase, upcsOfSelectedItemsObject }]));
   setTaskName('');  // Clear the input text
   setDisplayTasks(false);   // Hide the Tasks popup
 };
@@ -37,6 +41,21 @@ export function applyCustomPrices(currentGrid, setRowData, increase) {
       customRowNode.custom = getNewCost(rowNode.data.cost, increase);
     newCustomTableData.push(customRowNode);
   });
-  currentGrid.setGridOption('columnDefs', customColumnDef);  // Add 'Custom' column
   setRowData(newCustomTableData);  // Set the new data to the table
+};
+
+// Function to increase prices of selected items and from saved task
+export function applySavedCustomPrices(currentGrid, setRowData, task, setDisplayTasks) {
+  const upcsObject = task.upcsOfSelectedItemsObject;  // Get the UPCs of the items to update from the saved task
+  const newCustomTableData = [];
+  currentGrid.forEachNode( (rowNode) => {
+    const customRowNode = JSON.parse(JSON.stringify(rowNode.data));  // Create a new copy of the node
+    if (rowNode.data.UPC === upcsObject[rowNode.data.UPC] )  // If the UPC of the current node is in the saved UPCs object
+      customRowNode.custom = getNewCost(rowNode.data.cost, task.increase);  // On the custom field of the new row node add the new cost
+    newCustomTableData.push(customRowNode);  // Add the new row node to the new table data
+  });
+  setRowData(newCustomTableData);  // Set the new data to the table
+  currentGrid.setFilterModel(task.filterState); // Set the grids filter to the state saved in the task
+  currentGrid.applyColumnState({state: task.columnState, applyOrder: true}); // Set the grids column state to the state saved in the task
+  setDisplayTasks(false);  // Hide the tasks modal
 };

@@ -1,5 +1,4 @@
 import MainHeader from '../App/Layout/Header/MainHeader';
-import Footer from '../App/Layout/Footer/Footer';
 import btybglds from '../../assets/images/btybglds.png';
 import styles from './login.module.css';
 import { useState, useEffect, useCallback } from 'react';
@@ -116,7 +115,6 @@ const Login = () => {
         </div>
       </div>
       <img src={btybglds} alt="Brought to you by GLDS" className={styles.btybglds_img}/>
-      <Footer />
     </div>
   );
 };
