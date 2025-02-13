@@ -37,21 +37,25 @@ export function applyCustomPrices(currentGrid, setRowData, increase) {
   const newCustomTableData = [];
   currentGrid.forEachNode( (rowNode) => {
     const customRowNode = JSON.parse(JSON.stringify(rowNode.data));
-    if (rowNode.selected && rowNode.displayed)
+    if (rowNode.selected && rowNode.displayed){
       customRowNode.custom = getNewCost(rowNode.data.cost, increase);
+      customRowNode.priceChanged = true;
+    }
     newCustomTableData.push(customRowNode);
   });
   setRowData(newCustomTableData);  // Set the new data to the table
 };
 
-// Function to increase prices of selected items and from saved task
+// Function to increase prices of selected items from saved task
 export function applySavedCustomPrices(currentGrid, setRowData, task, setDisplayTasks) {
   const upcsObject = task.upcsOfSelectedItemsObject;  // Get the UPCs of the items to update from the saved task
   const newCustomTableData = [];
   currentGrid.forEachNode( (rowNode) => {
     const customRowNode = JSON.parse(JSON.stringify(rowNode.data));  // Create a new copy of the node
-    if (rowNode.data.UPC === upcsObject[rowNode.data.UPC] )  // If the UPC of the current node is in the saved UPCs object
+    if (rowNode.data.UPC === upcsObject[rowNode.data.UPC] ){  // If the UPC of the current node is in the saved UPCs object
       customRowNode.custom = getNewCost(rowNode.data.cost, task.increase);  // On the custom field of the new row node add the new cost
+      customRowNode.priceChanged = true;  // Set the flag of price changed to true to display the field as blue in the table
+    }
     newCustomTableData.push(customRowNode);  // Add the new row node to the new table data
   });
   setRowData(newCustomTableData);  // Set the new data to the table

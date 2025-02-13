@@ -4,9 +4,11 @@ const renameKey = (json, oldKey, newKey) => {
   return JSON.parse(JSON.stringify(json).split(oldKey).join(newKey));
 };
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+const randomPriceChangeFromLastPrcbk = (item, percentChange, direction) => {
+  const change = (item * percentChange).toFixed(2);
+  const num = direction ? (+item + +change) : (+item - +change);
+  return num.toFixed(2);
+};
 
 function Fetch() {
   const [data, setData] = useState(null);
@@ -19,27 +21,26 @@ function Fetch() {
       try {
         const response = await fetch('http://127.0.0.1:8080/pricebook');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Failed to fetch pricebook. status: ${response.status}`);
         }
         let json = await response.json();          
         json = renameKey(json, 'upc1', 'UPC');
         json = renameKey(json, 'shelfPrice', 'MSRP'); // Price
         json = renameKey(json, 'offPremisePrice', 'cost'); // Cost
-        setLoading(false);
-        // Finding all costs in PriceBook
         
+        // Finding all costs in PriceBook
         json = json.map((item) => {
-          const percentChange = getRandomInt(20);
+          const percentChange = (Math.random() * 0.2 ).toFixed(2);
           const direction = Boolean(Math.round(Math.random()));  // var to decide if price was raised or lowered
           return {
             ...item, 
             CostChange: {
-              dollar: ((item.cost * percentChange) % 100 ).toFixed(2),
+              dollar: randomPriceChangeFromLastPrcbk(item.cost, percentChange, direction),
               percent: percentChange,
               direction: direction
             },  
             MsrpChange: {
-              dollar: ((item.MSRP * percentChange) % 100 ).toFixed(2),
+              dollar: randomPriceChangeFromLastPrcbk(item.MSRP, percentChange, direction),
               percent: percentChange,
               direction: direction
             },
@@ -47,12 +48,15 @@ function Fetch() {
               dollar: (item.MSRP - item.cost).toFixed(2),
               percent: Math.round(((item.MSRP - item.cost) / item.MSRP) * 100),
             },
+            custom: item.MSRP,
+            priceChanged: false
           };
         });
         setData(json);
-        console.log(json);
+        setLoading(false);
       } catch (error) {
         setError(error);
+        console.error(error);
         setLoading(false);
       }
     };
