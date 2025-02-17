@@ -33,7 +33,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
   const onExportClick = () => {
     const csvExportParams = {
       columnSeparator: localStorage.getItem('colSeparator'),
-      columnKeys: ['UPC','brand','vendor','type','size','cost','MSRP','custom']  // Only export these columns (not checkbox column)
+      columnKeys: ['UPC','brand','vendor','type','size', 'CostChange','MsrpChange', 'cost','MSRP','Margin', 'custom']  // Only export these columns (not checkbox column)
     };
     exportData(currentGrid.getDataAsCsv(csvExportParams));
   };

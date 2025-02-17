@@ -1,0 +1,25 @@
+.item_details_header {
+    margin: 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.lm_button {
+    width: 100%;
+    padding: .65rem 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    background-color: #3DDC97;
+    box-shadow: 0;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color .15s ease-in-out;
+}
+.lm_button:hover {
+    background-color: color-mix(in srgb, #3DDC97 70%, white 30%);
+}
+.lm_button:active {
+    font-style: italic;
+}

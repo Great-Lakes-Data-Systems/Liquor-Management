@@ -3,3 +3,8 @@
     font-weight: 700;
     font-size: larger;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+}

@@ -9,7 +9,7 @@ import Fetch from './Data/Fetch';
 import TableFooter from './TableFooter';
 import WEModal from '../../../../../WEModal/WEModal';
 import useModal from '../../../../../WEModal/hooks/useModal';
-import ModalData from './ModalData';
+import LiquorDetail from './LiquorDetails/LiquorDetail';
 
 const ManagerBody = () => {
 
@@ -69,8 +69,8 @@ const ManagerBody = () => {
 
   // Row Data Modal Functionality
   const onRowDoubleClicked = (e) => {
+    setModalData(e.data);
     toggleModal();
-    setModalData(<ModalData data={e.data} />);
   };
 
   return (
@@ -98,9 +98,8 @@ const ManagerBody = () => {
 
       <TableFooter selected={selectedRowCount} totalRows={totalRows} itemSource={itemSource} />
 
-      {/* TODO: Fix close button */}
       <WEModal isOpen={modalState} toggle={toggleModal}>
-        {modalData}
+        <LiquorDetail data={modalData} toggle={toggleModal} />
       </WEModal>
 
     </div>

@@ -10,15 +10,15 @@ import CloseButton from './components/buttons/CloseButton';
 
 
 const defaultConfig = {
-  portalWrapperId: "modal_portal",
+  portalWrapperId: 'modal_portal',
   transition: {
     timeout: {entry:0,exit:500},
     unmountOnExit: true,
-    classNames: "we-modal__container-scale-in-left"
+    classNames: 'we-modal__container-scale-in-left'
   },
   showCloseButton: true
 
-}
+};
 
 const WEModal = ({ children, isOpen, toggle,config, ...props }) => {
   
@@ -28,22 +28,22 @@ const WEModal = ({ children, isOpen, toggle,config, ...props }) => {
   const modalRef = useRef(null);
 
   const onKeyDownEvent = useCallback((e) => {
-    e.key === "Escape" ? toggle() : ()=>{};
-  },[toggle])
+    e.key === 'Escape' ? toggle() : ()=>{};
+  },[toggle]);
 
   const onClose = useCallback((e) => {
     toggle();
-  },[toggle])
+  },[toggle]);
 
 
 
   useEffect(() => {
-    document.addEventListener("closemodal",onClose);
-    document.addEventListener("keydown", onKeyDownEvent);
+    document.addEventListener('closemodal',onClose);
+    document.addEventListener('keydown', onKeyDownEvent);
     return () => {
-      document.removeEventListener("keydown", onKeyDownEvent);
-      document.addEventListener("closemodal",onClose)
-    }
+      document.removeEventListener('keydown', onKeyDownEvent);
+      document.addEventListener('closemodal',onClose);
+    };
   });
 
 
@@ -66,7 +66,7 @@ const WEModal = ({ children, isOpen, toggle,config, ...props }) => {
 
         <div className={`${styles.modal_container} ${styles.scale_in} ${styles.center}`} style={{...props.style}} ref={modalRef}>  
 
-          {modalConfig.showCloseButton && <CloseButton className={`${styles.close_btn}`} onClick={toggle} width={50} height={50} />}
+          {modalConfig.showCloseButton && <CloseButton className={`${styles.close_btn}`} onClick={(e) => toggle()} width={50} height={50} />}
 
           <div className={`${styles.content}`}>{children}</div>
 
@@ -76,7 +76,7 @@ const WEModal = ({ children, isOpen, toggle,config, ...props }) => {
 
     </WEPortal>
   );
-}
+};
 
 
 
