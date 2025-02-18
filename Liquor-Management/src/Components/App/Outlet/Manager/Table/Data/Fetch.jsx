@@ -36,17 +36,17 @@ function Fetch() {
             ...item, 
             CostChange: {
               dollar: randomPriceChangeFromLastPrcbk(item.cost, percentChange, direction),
-              percent: (percentChange * 100).toFixed(),
+              percent: percentChange,
               direction: direction
             },  
             MsrpChange: {
               dollar: randomPriceChangeFromLastPrcbk(item.MSRP, percentChange, direction),
-              percent: (percentChange * 100).toFixed(),
+              percent: percentChange,
               direction: direction
             },
             Margin: {
               dollar: (item.MSRP - item.cost).toFixed(2),
-              percent: Math.round(((item.MSRP - item.cost) / item.MSRP) * 100),
+              percent: ((item.MSRP - item.cost) / item.MSRP).toFixed(2),
             },
             custom: item.MSRP,
             priceChanged: false

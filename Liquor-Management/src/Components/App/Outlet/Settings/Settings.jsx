@@ -1,10 +1,11 @@
-import styles from './outlet.module.css';
-
+import styles from './settings.module.css';
+import ColumnsExported from './ColumnsExported';
+// TODO: Add 'add column' setting
 const Settings = () => {
   return (
-    <div className={`${styles.page} ${styles.settings_container}`}>
+    <div className={`${styles.page}`}>
       <h1 className={styles.center}>Settings</h1>
-      <div className={styles.column_separator_div}>
+      <div className={styles.setting_div}>
         <h2>Change the column separator in export</h2>
         <select onChange={(e) => localStorage.setItem('colSeparator', e.target.value)}>
           <option value="" disabled selected hidden>Change separator</option>
@@ -16,6 +17,7 @@ const Settings = () => {
           <option value=' '>space</option>
         </select>
       </div>
+      <ColumnsExported />
       <div className={styles.version_container}>
         <p className={styles.version_p}>Version: 1.0.0</p>
       </div>

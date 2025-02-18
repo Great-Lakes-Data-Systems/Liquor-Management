@@ -7,7 +7,7 @@ import ErrorPage from './Components/ErrorPage';
 import Dashboard from './Components/App/Outlet/Dashboard';
 import Manage from './Components/App/Outlet/Manager/Manager';
 import Reports from './Components/App/Outlet/Reports';
-import Settings from './Components/App/Outlet/Settings';
+import Settings from './Components/App/Outlet/Settings/Settings';
 import Login from './Components/Login/Login';
 import Auth from './Components/Auth';
 // import LoaderModal from './Components/Loader/LoaderModal';

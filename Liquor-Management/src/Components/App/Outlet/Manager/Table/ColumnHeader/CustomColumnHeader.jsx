@@ -4,7 +4,9 @@ import AgGridAscArrow from '../../../../../../assets/icons/AgGridAscArrow';
 import AgGridDescArrow from '../../../../../../assets/icons/AgGridDescArrow';
 
 const CustomColumnHeader = (props) => {
-  const [dollar, setDollar] = useState(true);
+
+  // State to control whether dollar or percent is displayed. If true display $, if false display %
+  const [dollar, setDollar] = useState(true);  
   const [sortState, setSortState] = useState(0);
     
   // Function to manually sort column
@@ -20,6 +22,8 @@ const CustomColumnHeader = (props) => {
         column: props.column.colId
       } 
     });
+    props.column.colDef.dollar = !dollar;  // Setting custom field 'dollar' on the column header,
+    // so that cells that have not rendered yet will check this field before rendering
     document.dispatchEvent(event); // Sending event to the cell renderers to switch from dollar to percent
     setDollar(!dollar);
   };

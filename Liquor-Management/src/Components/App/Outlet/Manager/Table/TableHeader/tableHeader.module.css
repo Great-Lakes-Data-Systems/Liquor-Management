@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.question_icon {
+    margin: 1rem;
+    margin-right: 0;
+}
+
 .managerSearch {
     background-color: #000000;
     color: #ffffff;

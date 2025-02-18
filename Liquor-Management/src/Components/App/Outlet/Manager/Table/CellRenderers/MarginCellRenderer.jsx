@@ -14,10 +14,8 @@ const MarginCellRenderer = (params) => {
   const [show, setShow] = useState(getInitialValue(params.colDef.dollar));
 
   document.addEventListener('toggleDollarPercent', (e) => {
-    if (e.detail.column === params.column.colId){
+    if (e.detail.column === params.column.colId)
       setShow(e.detail.dollar);
-      params.colDef.dollar = e.detail.dollar;
-    }
   });
 
   return (
@@ -26,7 +24,7 @@ const MarginCellRenderer = (params) => {
       {
         show ? 
           USDollar.format(params.data.Margin.dollar) :
-          <span>%{params.data.Margin.percent}</span>
+          <span>%{(params.data.Margin.percent * 100).toFixed()}</span>
       }
     </div>
   );

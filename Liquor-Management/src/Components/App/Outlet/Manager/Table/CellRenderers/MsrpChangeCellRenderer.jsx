@@ -15,10 +15,8 @@ const MsrpChangeCellRenderer = (params) => {
   const [show, setShow] = useState(getInitialValue(params.colDef.dollar));
   
   document.addEventListener('toggleDollarPercent', (e) => {
-    if (e.detail.column === params.column.colId){
+    if (e.detail.column === params.column.colId)
       setShow(e.detail.dollar);
-      params.colDef.dollar = e.detail.dollar;
-    }
   });
       
   return (
@@ -31,7 +29,7 @@ const MsrpChangeCellRenderer = (params) => {
       {
         show ? 
           USDollar.format(params.data.MsrpChange.dollar):
-          <span>%{params.data.MsrpChange.percent}</span> 
+          <span>%{(params.data.MsrpChange.percent * 100).toFixed()}</span> 
       }
     </div>
   );

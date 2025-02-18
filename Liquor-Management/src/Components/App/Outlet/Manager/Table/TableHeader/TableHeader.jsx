@@ -6,15 +6,20 @@ import Filter from './Filter/FilterCopy';
 import styles from './tableHeader.module.css';
 import exportData from './exportHook';
 import { logFilter } from './Tasks/FilterLogHook';
+import QuestionFillIcon from '../../../../../../assets/icons/QuestionFillIcon';
 import BookIcon from '../../../../../../assets/icons/BookIcon';
 // import ListULIcon from '../../../../../../assets/icons/ListULIcon';
 // import PenIcon from '../../../../../../assets/icons/PenIcon';
 import ListCheckedIcon from '../../../../../../assets/icons/ListCheckedIcon';
 import FilterIcon from '../../../../../../assets/icons/FilterIcon';
 import DownloadIcon from '../../../../../../assets/icons/DownloadIcon';
+import Documentation from './Documentation/Documentation';
 import Show from '../../../../../Show/Show';
+import WEModal from '../../../../../../WEModal/WEModal';
+import useModal from '../../../../../../WEModal/hooks/useModal';
 
 const BUTTON_ICON_SIZE = '30';
+const QUESTION_ICON_SIZE = '60';
 
 const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSource, currentGrid, selected }) => {
 
@@ -23,6 +28,7 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
   const filterTabRef = useRef(null);
   const taskTabRef = useRef(null);
   const { data } = Fetch();
+  const { modalState, toggleModal } = useModal();
 
   // Loads the table with new data and sets the source of the data
   const setTableData = (rowData, itemSource) => {
@@ -33,7 +39,8 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
   const onExportClick = () => {
     const csvExportParams = {
       columnSeparator: localStorage.getItem('colSeparator'),
-      columnKeys: ['UPC','brand','vendor','type','size', 'CostChange','MsrpChange', 'cost','MSRP','Margin', 'custom']  // Only export these columns (not checkbox column)
+      columnKeys: JSON.parse(localStorage.getItem('columns_to_export')),
+      // columnKeys: ['UPC','brand','vendor','type','size', 'CostChange','MsrpChange', 'cost','MSRP','Margin', 'custom']  // Only export these columns (not checkbox column)
     };
     exportData(currentGrid.getDataAsCsv(csvExportParams));
   };
@@ -41,6 +48,14 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
   return (
     <div className={styles.tableHeader}>
       
+      <div className={styles.question_icon} onClick={toggleModal}>
+        <QuestionFillIcon width={QUESTION_ICON_SIZE} height={QUESTION_ICON_SIZE} color='#2ecc71'/>
+      </div>
+
+      <WEModal isOpen={modalState} toggle={toggleModal}>
+        <Documentation toggle={toggleModal} />
+      </WEModal>
+
       <input
         type='text'
         placeholder='Search'
