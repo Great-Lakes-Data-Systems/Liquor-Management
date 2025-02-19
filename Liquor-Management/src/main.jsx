@@ -10,7 +10,7 @@ import Reports from './Components/App/Outlet/Reports';
 import Settings from './Components/App/Outlet/Settings/Settings';
 import Login from './Components/Login/Login';
 import Auth from './Components/Auth';
-// import LoaderModal from './Components/Loader/LoaderModal';
+// import LoaderModal from './Components/Loader/LoaderModal'; //TODO
 
 const router = createBrowserRouter([
   {

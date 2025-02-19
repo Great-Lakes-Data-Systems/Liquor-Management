@@ -36,37 +36,42 @@ const Login = () => {
       localStorage.removeItem('password');
     }
 
-    let responseStatusCode = undefined;
-    try {
-      const response = await fetch('http://127.0.0.1:8080/login', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          username: usernameValue,
-          password: passwordValue 
-        }),
-        headers: {'Content-Type': 'application/json'},
-      });
+    // FAKE API CALL
+    if (usernameValue === 'avi' && passwordValue === '1234')
+      navigate('/');
+    else setErrorMessage('The username or password are incorrect');
 
-      responseStatusCode = response.status;
-      const json = await response.json();
+    // let responseStatusCode = undefined;
+    // try {
+    //   const response = await fetch('http://127.0.0.1:8080/login', {
+    //     method: 'POST',
+    //     body: JSON.stringify({ 
+    //       username: usernameValue,
+    //       password: passwordValue 
+    //     }),
+    //     headers: {'Content-Type': 'application/json'},
+    //   });
+
+    //   responseStatusCode = response.status;
+    //   const json = await response.json();
       
-      // If response from server is ok and we got a token, 
-      // store the token in session storage and go to the home page
-      if (responseStatusCode === 200 && json.token) {
-        sessionStorage.setItem('token', JSON.stringify(json.token));
-        navigate('/');
-      }
+    //   // If response from server is ok and we got a token, 
+    //   // store the token in session storage and go to the home page
+    //   if (responseStatusCode === 200 && json.token) {
+    //     sessionStorage.setItem('token', JSON.stringify(json.token));
+    //     navigate('/');
+    //   }
 
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-    } catch (error) {
-      setErrorMessage(error.message);  // Use this message for devlopment
-      // setErrorMessage('Something went wrong');  // TODO: Use this message for production
-      // If the server sent an unauthorized code, display the following message to user
-      if(responseStatusCode === 401)
-        setErrorMessage('The username or password are incorrect');
-    }
+    //   if (!response.ok) {
+    //     throw new Error(`Response status: ${response.status}`);
+    //   }
+    // } catch (error) {
+    //   setErrorMessage(error.message);  // Use this message for devlopment
+    //   // setErrorMessage('Something went wrong');  // TODO: Use this message for production
+    //   // If the server sent an unauthorized code, display the following message to user
+    //   if(responseStatusCode === 401)
+    //     setErrorMessage('The username or password are incorrect');
+    // }
   }, [navigate, rememberMeValue, usernameValue, passwordValue]);
 
   // Submit the form when enter key is pressed

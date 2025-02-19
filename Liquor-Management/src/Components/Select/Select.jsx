@@ -1,22 +1,24 @@
 import {useState} from 'react';
 import TextInput from './Components/TextInput';
-import OptionsList, {Option} from './Components/OptionsList';
+import styles from './select.module.css';
+import OptionsList, {Option, CheckboxOption} from './Components/OptionsList';
 
-const Select = ({onChange, children}) => {
-  const [show, setshow] = useState(true);
-  const [value, setValue] = useState(true);
+const Select = ({value,onChange,placeholder='Select', children}) => {
+  const [show, setShow] = useState(false);
+  
   const changeHandler = (e) => {
     console.log(e);
-    setValue(e.target.textContent);
+    
   };
   return (
-    <div>
-      <TextInput value={value}/>
-      <OptionsList onChange={changeHandler}>
+    <div className={styles.select_container} title={value}>
+      <TextInput placeholder={placeholder} value={value} toggle={() => setShow(!show)}/>
+      <OptionsList isShowing={show} onChange={changeHandler}>
         {children}
       </OptionsList>
     </div>
   );
 };
 Select.Option = Option;
+Select.CheckboxOption = CheckboxOption;
 export default Select;

@@ -1,9 +1,13 @@
+import ChevronDownIcon from '../../../assets/icons/ChevronDownIcon';
+import styles from '../select.module.css';
 
-const TextInput = ({ value }) => {
+const TextInput = ({ value,placeholder, toggle }) => {
   return (
-    <div>
-      <input type="text" value={value} />
-      <span>^</span>
+    <div onClick={toggle} className={styles.input_container}>
+      <input type="text" value={value ? value : placeholder} className={styles.select_input} />
+      <span className={styles.select_chevron}>
+        <ChevronDownIcon />
+      </span>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the Data Grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the Data Grid
-import columnDefinitions from './columnDefinitions';
+import ColumnDefinitions from './ColumnDefinitions';
 import styles from './manager.module.css';
 import TableHeader from './TableHeader/TableHeader';
 import Fetch from './Data/Fetch';
@@ -30,7 +30,13 @@ const ManagerBody = () => {
   }, [loading, data]);
 
   // Column Definitions: Defines the columns to be displayed.
-  const [colDefs,] = useState(columnDefinitions);
+  const [colDefs, setColDefs] = useState();
+  
+  // Loading the data
+  const { displayedColumns, loadingColDefs } = ColumnDefinitions();
+  useEffect(() => {
+    !loadingColDefs && setColDefs(displayedColumns);
+  }, [loadingColDefs, displayedColumns]);
 
   // Default Column Definitions
   const defaultColDef = useMemo(() => {

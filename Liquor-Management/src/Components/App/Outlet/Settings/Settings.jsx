@@ -1,6 +1,7 @@
 import styles from './settings.module.css';
 import ColumnsExported from './ColumnsExported';
-// TODO: Add 'add column' setting
+import ChangeColumns from './ChangeColumns';
+
 const Settings = () => {
   return (
     <div className={`${styles.page}`}>
@@ -17,6 +18,7 @@ const Settings = () => {
           <option value=' '>space</option>
         </select>
       </div>
+      <ChangeColumns />
       <ColumnsExported />
       <div className={styles.version_container}>
         <p className={styles.version_p}>Version: 1.0.0</p>
