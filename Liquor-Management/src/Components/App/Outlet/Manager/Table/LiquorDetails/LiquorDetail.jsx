@@ -17,7 +17,7 @@ function formatDate(input) {
 
 const LiquorDetail = ({ data, toggle }) => {
   return (
-    <div>
+    <div className={styles.item_details_container}>
       <h2 className={styles.item_details_header} onClick={() => console.log(data)}>Item Details</h2>
       <div className={styles.details_container}>
 

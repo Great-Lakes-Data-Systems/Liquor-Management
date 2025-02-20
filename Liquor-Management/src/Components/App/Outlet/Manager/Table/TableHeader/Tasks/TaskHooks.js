@@ -1,15 +1,12 @@
-const reducer = (accumulator, rowNode) => {
-  return ( 
-    { ...accumulator, [rowNode.data.UPC]: rowNode.data.UPC }
-  );
-};
-
 //  Function to add a task to local storage
-export function saveFilterState( currentGrid, taskName, setTaskName, setDisplayTasks, increase ) {
+export function saveTask( currentGrid, taskName, setTaskName, setDisplayTasks, increase ) {
   const filterState = currentGrid.getFilterModel();
   const columnState = currentGrid.getColumnState();
-  const selectedItems = currentGrid.getSelectedNodes().filter((node) => node.displayed);
-  const upcsOfSelectedItemsObject = selectedItems.reduce(reducer, {});
+  const upcsOfSelectedItemsObject = {};
+  currentGrid.forEachNodeAfterFilter((rowNode) => {
+    if (rowNode.selected) 
+      upcsOfSelectedItemsObject[rowNode.data.UPC] = rowNode.data.UPC;
+  });
   const filterStates = JSON.parse(localStorage.getItem('tasksList')) || [];
   localStorage.setItem('tasksList', JSON.stringify([...filterStates, { taskName, filterState, columnState, increase, upcsOfSelectedItemsObject }]));
   setTaskName('');  // Clear the input text

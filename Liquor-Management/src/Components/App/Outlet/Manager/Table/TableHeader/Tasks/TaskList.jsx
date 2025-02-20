@@ -7,7 +7,7 @@ const BUTTON_ICON_SIZE = 24;
 
 const TaskList = ({ currentGrid, setDisplayTasks, setRowData }) => {
 
-  const [listOfTasks, setListOfTasks] = useState(JSON.parse(localStorage.getItem('tasksList')));
+  const [listOfTasks, setListOfTasks] = useState(JSON.parse(localStorage.getItem('tasksList')) || []);
   const [selectedTask, setSelectedTask] = useState();
 
   return (

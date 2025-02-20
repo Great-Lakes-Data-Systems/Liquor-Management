@@ -22,8 +22,8 @@ const ColumnsExported = () => {
   return (
     <div className={styles.setting_div}>
       <h2>Columns to be exported</h2>
-      <p>Select the columns to export</p>
-      <p>Only columns displayed in the table will be exported</p>
+      <p>Select the columns to export.</p>
+      <p>Only columns displayed in the table will be exported.</p>
       {allColumns.map((col) => {
         const checked = allcheckedColumns.includes(col);
         const colId = `ColumnsExported${col}`;

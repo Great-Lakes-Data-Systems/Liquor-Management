@@ -17,6 +17,7 @@ const ManagerBody = () => {
   const [selectedRowCount, setSelectedRowCount] = useState();
   const [itemSource, setItemSource] = useState('PriceBook');
   const [totalRows, setTotalRows] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
   const { modalState, toggleModal } = useModal();
   const [modalData, setModalData] = useState();
   
@@ -60,18 +61,16 @@ const ManagerBody = () => {
 
   // Footer functionality
   const onStateUpdated = useCallback((params) => {
-    const selectedAndDisplayedRows = params.api.getSelectedNodes().filter((node) => node.displayed);
-    setSelectedRowCount(selectedAndDisplayedRows.length); // Setting the number of selected and displayed rows to be shown in the footer
-    setTotalRows(params.api.getDisplayedRowCount());
+    const selectedAndDisplayedRows = params?.api?.getSelectedNodes().filter((node) => node.displayed);
+    setSelectedRowCount(selectedAndDisplayedRows?.length); // Setting the number of selected and displayed rows to be shown in the footer
+    setTotalRows(params?.api?.getDisplayedRowCount());
   }, []);
 
   // Search Functionality
-  const onFilterTextBoxChanged = useCallback(() => {
-    gridRef.current.api.setGridOption(
-      'quickFilterText',
-      document.getElementById('filter-text-box').value,
-    );
-  }, []);
+  useEffect(() => {
+    gridRef.current?.api?.setGridOption('quickFilterText', searchValue);
+    onStateUpdated(gridRef.current);
+  }, [searchValue, onStateUpdated]);
 
   // Row Data Modal Functionality
   const onRowDoubleClicked = (e) => {
@@ -83,7 +82,8 @@ const ManagerBody = () => {
     <div className={styles.managerBody}>
 
       <TableHeader
-        onFilterTextBoxChanged={onFilterTextBoxChanged}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
         setRowData={setRowData}
         setItemSource={setItemSource}
         itemSource={itemSource}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './tasks.module.css';
-import { saveFilterState, applyCustomPrices } from './TaskHooks';
+import { saveTask, applyCustomPrices } from './TaskHooks';
 
 const CreateTask = ({ currentGrid, setRowData, setDisplayTasks, selected }) => {
 
@@ -40,7 +40,7 @@ const CreateTask = ({ currentGrid, setRowData, setDisplayTasks, selected }) => {
         </button>
 
         <button className={styles.create_task_button} 
-          onClick={() => saveFilterState(currentGrid, taskName, setTaskName, setDisplayTasks, increase)}>
+          onClick={() => saveTask(currentGrid, taskName, setTaskName, setDisplayTasks, increase)}>
         Save
         </button>
       </div>

@@ -43,7 +43,6 @@ const msrpChangeValueGetter = (params) => {
 };
 
 const marginValueGetter = (params) => {
-  console.log(params);
   if (params.colDef.dollar === undefined || params.colDef.dollar) 
     return params.data.Margin.dollar;
   else return params.data.Margin.percent;

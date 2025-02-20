@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 // import { inventory } from '../data/inventory';
 import Fetch from '../Data/Fetch';
 import Tasks from './Tasks/Tasks';
-import Filter from './Filter/FilterCopy';
+import Filter from './Filter/Filter';
 import styles from './tableHeader.module.css';
 import exportData from './exportHook';
 import { logFilter } from './Tasks/FilterLogHook';
@@ -21,7 +21,7 @@ import useModal from '../../../../../../WEModal/hooks/useModal';
 const BUTTON_ICON_SIZE = '30';
 const QUESTION_ICON_SIZE = '60';
 
-const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSource, currentGrid, selected }) => {
+const TableHeader = ({ searchValue, setSearchValue, setRowData, setItemSource, itemSource, currentGrid, selected }) => {
 
   const [displayTasks, setDisplayTasks] = useState(false);
   const [displayFilter, setDisplayFilter] = useState({displayed: false, style: {display: 'none'}});
@@ -59,9 +59,9 @@ const TableHeader = ({ onFilterTextBoxChanged, setRowData, setItemSource, itemSo
       <input
         type='text'
         placeholder='Search'
-        id='filter-text-box'
         className={styles.managerSearch}
-        onInput={onFilterTextBoxChanged} >
+        value={searchValue}
+        onInput={(e) => setSearchValue(e.target.value)} >
       </input>
 
       <div className={styles.buttonContainer}>

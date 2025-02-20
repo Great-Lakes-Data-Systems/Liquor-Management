@@ -18,6 +18,16 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
+.close_button {
+    position: absolute;
+    right: .2rem;
+    top: .2rem;
+    transition: transform .3s ease-in-out;
+}
+.close_button:hover {
+    transform: scale(1.4);
+}
+
 .tasks h3, .tasks h2 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
