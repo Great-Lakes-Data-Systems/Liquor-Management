@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from '../filter.module.css';
-import ArrowIcon from '../../../../../../../../assets/icons/DownArrowIcon';
+import Select from '../../../../../../../Select/Select';
 import TrashIcon from '../../../../../../../../assets/icons/TrashIcon';
 
 const ICON_SIZE = 24;
+const allLiquorSizes = ['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'];
 
 const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate, removeFilterRowComponent }) => {
 
@@ -15,19 +16,14 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate, removeFilterR
   const [filterValue, setFilterValue] = useState('');
   // If filter type is 'between' this is the second value
   const [filterTo, setFilterTo] = useState('');
-  // Display the dropdown menu of possible liquor sizes
-  const [displaySizes, setDisplaySizes] = useState(false);
   // An array of all liquor sizes selected by user
   const [allcheckedSizes, setAllCheckedSizes] = useState([]);
 
-  const allLiquorSizes = ['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'];
-
   function handleCheckboxChange(e) {
-    if (e.target.checked) {
-      setAllCheckedSizes([...allcheckedSizes, e.target.id]);
-    } else {
-      setAllCheckedSizes(allcheckedSizes.filter((item) => item !== e.target.id));
-    }
+    if (e.target.checked) 
+      setAllCheckedSizes([...allcheckedSizes, allLiquorSizes[e.target.dataset.index]]);
+    else 
+      setAllCheckedSizes(allcheckedSizes.filter(item => item !== allLiquorSizes[e.target.dataset.index]));
   }
 
   useEffect(() => {
@@ -96,32 +92,19 @@ const FilterRow = ({ index, agFilterTemplate, setAgFilterTemplate, removeFilterR
             <input type='text' placeholder='Enter value...' value={filterValue} onChange={e => setFilterValue(e.target.value)}/>}
 
           {column === 'size' && 
-            <div className={styles.multipleSelection}>
-              <button className={styles.sizeSelectBox} onClick={e => {
-                e.preventDefault;
-                setDisplaySizes(!displaySizes);
-              }}>
-              Select size
-                <ArrowIcon width={16} height={16} />
-              </button>
-              {displaySizes &&
-              <div className={styles.checkBoxes}>
-
-                { allLiquorSizes.map( size => {
-                  return(
-                    <label htmlFor={size} key={size}>
-                      <input type='checkbox' id={size} onChange={handleCheckboxChange}/>
-                      {size}
-                    </label>
-                  );
-                }) }
-              </div>}
-            </div>}
+          <Select value={allcheckedSizes.join(',')} placeholder="Select Size">
+            { allLiquorSizes.map( (size, index) => {
+              return(
+                <Select.CheckboxOption id={index} key={size} onChange={handleCheckboxChange}>
+                  {size}
+                </Select.CheckboxOption>
+              );
+            }) }
+          </Select>}
 
           {(column === 'cost' || column === 'MSRP') && 
             (filterType === 'inRange' ?
               <>
-              
                 <input type='number' placeholder='From' value={filterValue} onChange={e => setFilterValue(Number(e.target.value))}/>
                 <input type='number' placeholder='To' value={filterTo} onChange={e => setFilterTo(Number(e.target.value))}/>
               </> :

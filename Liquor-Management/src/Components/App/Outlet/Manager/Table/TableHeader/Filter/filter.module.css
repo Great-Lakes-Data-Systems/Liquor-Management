@@ -88,26 +88,6 @@
     align-items: center;
 }
 
-.multipleSelection, .sizeSelectBox, .checkBoxes{
-    display: inline;
-}
-
-.sizeSelectBox{
-    background-color: white;
-    padding: 0%;
-    border: 1px solid black;
-}
-
-.checkBoxes label {
-    display: block;
-}
-
-.checkBoxes label:hover {
-    background-color: #4F615E;
-    color: white;
-    /* Added text color for better visibility */
-}
-
 .filter_button_row {
     display: flex;
     flex-wrap: nowrap;

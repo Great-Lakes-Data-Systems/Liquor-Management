@@ -35,16 +35,19 @@ const LiquorDetail = ({ data, toggle }) => {
         <div>
           <div className={`${styles.grid_container} `}>
             <div></div>
+            <div></div>
             <div className={`${styles.grid_header}`}>dollar</div>
             <div className={`${styles.grid_header}`}>percent</div>
-            {/* TODO: Show direction of change */}
             <div className={`${styles.individual_detail}`}>Cost Change:</div>
+            <div>{data.CostChange.direction ? '+' : '-'}</div>
             <div className={`${styles.individual_detail}`}>{USDollar.format(data.CostChange.dollar)}</div>
             <div className={`${styles.individual_detail}`}>%{data.CostChange.percent}</div>
             <div className={`${styles.individual_detail}`}>Price Change:</div>
+            <div>{data.MsrpChange.direction ? '+' : '-'}</div>
             <div className={`${styles.individual_detail}`}>{USDollar.format(data.MsrpChange.dollar)}</div>
             <div className={`${styles.individual_detail}`}>%{data.MsrpChange.percent}</div>
             <div className={`${styles.individual_detail}`}>Margin:</div>
+            <div>+</div>
             <div className={`${styles.individual_detail}`}>{USDollar.format(data.Margin.dollar)}</div>
             <div className={`${styles.individual_detail}`}>%{data.Margin.percent}</div>
           </div>

@@ -39,16 +39,6 @@ const ManagerBody = () => {
     !loadingColDefs && setColDefs(displayedColumns);
   }, [loadingColDefs, displayedColumns]);
 
-  // Default Column Definitions
-  const defaultColDef = useMemo(() => {
-    return {
-      filterParams: {
-        // TODO: Decide if we want this functionality
-        // maxNumConditions: 1
-      }
-    };
-  }, []);
-
   // Enable row selection
   const rowSelection = useMemo(() => {
     return {
@@ -94,7 +84,6 @@ const ManagerBody = () => {
         <AgGridReact
           rowData={rowData}
           columnDefs={colDefs}
-          defaultColDef={defaultColDef}
           rowSelection={rowSelection}
           onStateUpdated={onStateUpdated}
           ref={gridRef}
