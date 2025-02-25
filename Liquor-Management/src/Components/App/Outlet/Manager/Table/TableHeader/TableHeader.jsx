@@ -5,7 +5,6 @@ import Tasks from './Tasks/Tasks';
 import Filter from './Filter/Filter';
 import styles from './tableHeader.module.css';
 import exportData from './exportHook';
-import { logFilter } from './Tasks/FilterLogHook';
 import QuestionFillIcon from '../../../../../../assets/icons/QuestionFillIcon';
 import BookIcon from '../../../../../../assets/icons/BookIcon';
 // import ListULIcon from '../../../../../../assets/icons/ListULIcon';
@@ -20,6 +19,8 @@ import useModal from '../../../../../../WEModal/hooks/useModal';
 
 const BUTTON_ICON_SIZE = '30';
 const QUESTION_ICON_SIZE = '60';
+const allColumns = ['UPC','brand','vendor','type','size', 'CostChange','MsrpChange', 'cost','MSRP','Margin', 'custom',
+  'adaName', 'adaNumber', 'effectiveDate', 'liquorCode', 'packSize', 'proof',];
 
 const TableHeader = ({ searchValue, setSearchValue, setRowData, setItemSource, itemSource, currentGrid, selected }) => {
 
@@ -38,9 +39,8 @@ const TableHeader = ({ searchValue, setSearchValue, setRowData, setItemSource, i
 
   const onExportClick = () => {
     const csvExportParams = {
-      columnSeparator: localStorage.getItem('colSeparator'),
-      columnKeys: JSON.parse(localStorage.getItem('columns_to_export')),
-      // columnKeys: ['UPC','brand','vendor','type','size', 'CostChange','MsrpChange', 'cost','MSRP','Margin', 'custom']  // Only export these columns (not checkbox column)
+      columnSeparator: localStorage.getItem('colSeparator') || ',',
+      columnKeys: JSON.parse(localStorage.getItem('columns_to_export')) || allColumns,
     };
     exportData(currentGrid.getDataAsCsv(csvExportParams));
   };
@@ -101,7 +101,6 @@ const TableHeader = ({ searchValue, setSearchValue, setRowData, setItemSource, i
           <div 
             className={styles.button} 
             onClick={() => {
-              logFilter(currentGrid.getFilterModel());
               if (!displayFilter.displayed)
                 setDisplayFilter({displayed: true, style: {display: 'flex'}});
               if (displayFilter.displayed)
@@ -119,7 +118,7 @@ const TableHeader = ({ searchValue, setSearchValue, setRowData, setItemSource, i
             filterTabRef={filterTabRef} 
             displayFilter={displayFilter} 
             setDisplayFilter={setDisplayFilter}/>
-                             
+            
 
           <div 
             className={`${styles.button} ${displayTasks && styles.active}`}

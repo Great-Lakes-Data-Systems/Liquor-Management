@@ -32,7 +32,7 @@ const ColumnsExported = () => {
           <label htmlFor={colId}>{col}</label>
         </span>);
       })}
-      <button onClick={saveExportColumns}>Save Changes</button>
+      <button className={styles.save_button} onClick={saveExportColumns}>Save Changes</button>
     </div>
   );
 };

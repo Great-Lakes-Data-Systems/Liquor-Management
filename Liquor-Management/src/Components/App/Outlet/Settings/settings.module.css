@@ -15,7 +15,29 @@
     padding: 1rem;
     padding-top: 0;
     margin-bottom: 1rem;
-    background-color: darkgreen;
+    background-color: DarkBlue;
     border: 2px solid white;
     border-radius: 5px;
+}
+
+.save_button {
+    /* flex: 1; */
+    display: block;
+    padding: .65rem;
+    margin: 0;
+    margin-top: 1rem;
+    border: 0;
+    outline: none;
+    background-color: #3DDC97;
+    box-shadow: 0;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color .15s ease-in-out;
+}
+.save_button:hover {
+    background-color: color-mix(in srgb, #3DDC97 70%, white 30%);
+}
+.save_button:active {
+    font-style: italic;
 }

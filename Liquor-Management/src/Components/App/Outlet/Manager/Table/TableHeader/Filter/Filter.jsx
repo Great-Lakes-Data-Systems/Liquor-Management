@@ -3,8 +3,14 @@ import FilterRow from './FilterRow/FilterRow';
 import styles from './filter.module.css';
 import useClickOutside from '../../../../../../../ClickOutside/useClickOutside';
 import CloseIcon from '../../../../../../../assets/icons/CloseIcon';
-// import Select from '../../../../../../Select/Select';
+
 const CLOSE_BUTTON_SIZE = 50;
+
+const reducer = (accumulator, currentValue) => {
+  return ( 
+    { ...accumulator, ...currentValue.filterState }
+  );
+};
 
 const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) => {
 
@@ -29,17 +35,10 @@ const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) 
     setFilterCount(filterCount.filter((id) => id !== index));
   };
 
-  const reducer = (accumulator, currentValue) => {
-    const key = Object.keys(currentValue.filterState)[0];
-    return ( 
-      { ...accumulator, [key]: currentValue.filterState[key] }
-    );
-  };
-
   const applyfilter = () => {
     // TODO: Enable two filters on same column
     const filterModel = agFilterTemplate.reduce(reducer, {});
-    console.log('filterModel', filterModel);
+    // console.log('filterModel', filterModel);
     currentGrid.setFilterModel(filterModel);
   };
   
@@ -50,7 +49,6 @@ const Filter = ({ currentGrid, filterTabRef, displayFilter, setDisplayFilter }) 
       </span>
       
       <h2 className={styles.filterHeader}>Create Filters</h2>
-      {/* <Select placeholder="Filter by" options={['50 ML', '100 ML', '200 ML', '375 ML', '700 ML', '750 ML', '1000 ML', '1750 ML'].map(o => ({id:o,value:o,label:o}))}/> */}
       <div className={styles.filter_table_row}>
         {filterCount.map((id) => <FilterRow key={id} index={id} agFilterTemplate={agFilterTemplate} setAgFilterTemplate={setAgFilterTemplate} removeFilterRowComponent={removeFilterRowComponent} />)}
       </div>

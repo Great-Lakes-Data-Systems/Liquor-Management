@@ -30,7 +30,7 @@ const ChangeColumns = () => {
           <label htmlFor={colId}>{col}</label>
         </span>);
       })}
-      <button onClick={saveColumns}>Save Changes</button>
+      <button className={styles.save_button} onClick={saveColumns}>Save Changes</button>
     </div>
   );
 };
