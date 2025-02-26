@@ -26,7 +26,7 @@ function getNewCost(cost, increase) {
   if (increase.dollar)
     return (Number(cost) + Number(increase.dollar)).toFixed(2);
   else if (increase.percentage) 
-    return ( cost * (1 + Number(increase.percentage)) ).toFixed(2);
+    return ( cost * (1 + (Number(increase.percentage) / 100) ) ).toFixed(2);
 }
 
 // Function to increase prices of selected items and display all items
